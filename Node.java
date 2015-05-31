@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 class Node{
 	HashMap<Integer, String> config;
 	double score;

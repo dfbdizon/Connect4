@@ -2,8 +2,28 @@ import java.util.HashMap;
 
 public class Connect4{
 	private static HashMap<Integer, String> board = new HashMap<Integer, String>(7);
-	public static void main(String [] args){
+	private static boolean endGame = false;
+	private static UI gameUI;
+
+	public Connect4(){
 		initializeBoard();
+	}
+	public static void addPiece(int column, int row, int player){
+		String currentCol = board.get(column);
+		String newCol;
+		char token;
+		if(player == 1) token = '1';
+		else token = '2'; 
+
+		newCol = currentCol.substring(0, row) + token;
+		for(int i = row+1; i < 6; i++) newCol += '0'; 
+
+		if(hasWinner(column, row, token)){
+			endGame = true;
+			if(player == 1) gameUI.updateStatus(4);
+			else gameUI.updateStatus(3);
+		}
+		//else if (Check if draw)
 	}
 	private static boolean hasWinner(int col, int row, char player){
 		if(checkHor(col, row, player) || checkVer(col, row, player) || checkDiagonalLeft(col, row, player) || checkDiagonalRight(col, row, player))
@@ -53,8 +73,8 @@ public class Connect4{
 			}
 		}
 		/* Upwards */
-		if((col != 1) && (row != 6)){
-			for(int i = col-1, j = row+1; i >= 1 && j <= 6; i--, j++){
+		if((col != 1) && (row != 5)){
+			for(int i = col-1, j = row+1; i >= 1 && j < 6; i--, j++){
 				if(board.get(i).charAt(j) == player) connected++;
 				else i = 1;
 			}
@@ -73,8 +93,8 @@ public class Connect4{
 			}
 		}
 		/* Upwards */
-		if((col != 7) && (row != 6)){
-			for(int i = col+1, j = row+1; i <= 7 && j <= 6; i++, j++){
+		if((col != 7) && (row != 5)){
+			for(int i = col+1, j = row+1; i <= 7 && j < 6; i++, j++){
 				if(board.get(i).charAt(j) == player) connected++;
 				else i = 7;
 			}
@@ -83,12 +103,14 @@ public class Connect4{
 		else return false;
 	}
 	private static void initializeBoard(){
-		board.put(1, "000000");
-		board.put(2, "000000");
-		board.put(3, "000000");
-		board.put(4, "000000");
-		board.put(5, "000000");
-		board.put(6, "000000");
-		board.put(7, "000000");
+		for(int i = 1; i <= 7; i++){
+			board.put(i, "000000");
+		}
+	}
+	public static HashMap<Integer, String> getBoard(){
+		return board;
+	}
+	public void setUI(UI gameUI){
+		this.gameUI = gameUI;
 	}
 }
