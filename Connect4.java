@@ -118,7 +118,7 @@ public class Connect4{
 	public static HashMap<Integer, String> getBoard(){
 		return board;
 	}
-	
+
 	public void setUI(UI gameUI){
 		this.gameUI = gameUI;
 	}
@@ -153,7 +153,7 @@ public class Connect4{
 
 		char left, right, up, down, upRight, upLeft, downRight, downLeft;
 		char left1, right1, up1, down1, upRight1, upLeft1, downRight1, downLeft1;
-		char left2, right2 up2, down2, upRight2, upLeft2, downRight2, downLeft2;
+		char left2, right2, up2, down2, upRight2, upLeft2, downRight2, downLeft2;
 		
 		left = getLeft(col, row);
 		right = getRight(col, row);
@@ -495,7 +495,7 @@ public class Connect4{
 
 	private static char getDownRight(int col, int row){
 		char retChar = '\0';
-		if(row != 0 && col != 7) retChar = baord.get(col+1).charAt(row-1);
+		if(row != 0 && col != 7) retChar = board.get(col+1).charAt(row-1);
 		return retChar;
 	}
 
