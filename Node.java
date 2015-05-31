@@ -1,14 +1,14 @@
 class Node{
 	HashMap<Integer, String> config;
-	int score;
-	public Node(HashMap<Integer, String> newConfig, int newScore){
+	double score;
+	public Node(HashMap<Integer, String> newConfig, double newScore){
 		config = newConfig;
 		score = newScore;
 	}
 	public HashMap<Integer, String> getConfig(){
 		return config;
 	}
-	public int getScore(){
+	public double getScore(){
 		return score;
 	}
 }
