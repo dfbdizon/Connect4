@@ -556,7 +556,15 @@ public class Connect4{
 	int MinMove(int col, int row, char player, Tree tree) {
 		Node bestMove = tree.getChild(1);
 		Node currMove = tree.getChild(0);//initialize best move
-		Tree currTree = new Tree(col, row, '1', currMove);
+		Node root = currMove;
+		Tree currTree = new Tree();
+		currTree.addChild(new Node(root.move(1), olibya));
+		currTree.addChild(new Node(root.move(2), olibya));
+		currTree.addChild(new Node(root.move(3), olibya));
+		currTree.addChild(new Node(root.move(4), olibya));
+		currTree.addChild(new Node(root.move(5), olibya));
+		currTree.addChild(new Node(root.move(6), olibya));
+		currTree.addChild(new Node(root.move(7), olibya));
 		for(int i = 0; i <= tree.children.size()-1; i++) {//iterate on all moves
 			if (olibya('2', row, tree.children.indexOf(MaxMove(col, row, '1', currTree))) > olibya('2', row, tree.children.indexOf(bestMove))) 
 				bestMove = currMove;
