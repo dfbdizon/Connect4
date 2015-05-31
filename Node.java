@@ -5,7 +5,7 @@ class Node{
 	double score;
 	double myMaterial;
 	double oppMaterial;
-	char player; //kung sinong nagplay ng move 
+	char player; //kung sinong nagplay ng move na yon
 
 	public Node(HashMap<Integer, String> newConfig, double newScore){
 		config = newConfig;

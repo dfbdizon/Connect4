@@ -5,6 +5,7 @@ public class Connect4{
 	private static boolean endGame = false;
 	private static UI gameUI;
 
+	private static 
 	public Connect4(){
 		initializeBoard();
 	}
