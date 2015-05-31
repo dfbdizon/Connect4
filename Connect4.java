@@ -102,6 +102,8 @@ public class Connect4{
 
 	//Dapat may magssave ng stateScores ni player 1 and 2 doon sa currentState
 
+	// sa tree, computation ng statescore ay iincrement lang from parent, in favor of AI agent pa rin 
+
 
 	private static double getStateScore(char player, int row, int col, double myMaterial, double oppMaterial){
 		String currentColumn;
@@ -123,7 +125,7 @@ public class Connect4{
 
 		char left, right, up, down, upRight, upLeft, downRight, downLeft;
 		char left1, right1, up1, down1, upRight1, upLeft1, downRight1, downLeft1;
-		char left2, right2 up2, down2, upRight2, upLeft2, downRight2, downLeft2;
+		char left2, right2, up2, down2, upRight2, upLeft2, downRight2, downLeft2;
 		
 		left = getLeft(col, row);
 		right = getRight(col, row);
