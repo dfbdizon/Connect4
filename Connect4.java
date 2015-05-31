@@ -5,7 +5,6 @@ public class Connect4{
 	private static boolean endGame = false;
 	private static UI gameUI;
 
-	private static 
 	public Connect4(){
 		initializeBoard();
 	}
@@ -547,7 +546,7 @@ public class Connect4{
 			currTree.addChild(new Node(root.move(6), olibya));
 			currTree.addChild(new Node(root.move(7), olibya));
 			for(int i = 0; i <= tree.children.size()-1; i++) {//iterate on each move
-				if (getStateScore2('2', row, tree.children.indexOf(MinMove(col, row, '2', currTree))) > getStateScore2('2', row, tree.children.indexOf(bestMove))) 
+				if (olibya('2', row, tree.children.indexOf(MinMove(col, row, '2', currTree))) > olibya('2', row, tree.children.indexOf(bestMove))) 
 					bestMove = currMove;
 			}
 			return tree.children.indexOf(bestMove)+1;
@@ -559,7 +558,7 @@ public class Connect4{
 		Node currMove = tree.getChild(0);//initialize best move
 		Tree currTree = new Tree(col, row, '1', currMove);
 		for(int i = 0; i <= tree.children.size()-1; i++) {//iterate on all moves
-			if (getStateScore2('2', row, tree.children.indexOf(MaxMove(col, row, '1', currTree))) > getStateScore2('2', row, tree.children.indexOf(bestMove))) 
+			if (olibya('2', row, tree.children.indexOf(MaxMove(col, row, '1', currTree))) > olibya('2', row, tree.children.indexOf(bestMove))) 
 				bestMove = currMove;
 		}
 		return tree.children.indexOf(bestMove)+1;
