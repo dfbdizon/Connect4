@@ -151,6 +151,8 @@ public class Connect4{
 	//do I count ung rows na wala naman na pagasa makabuo pa ng 4? this implementation, NO
 	//cinocount ko rin ung doubles, IE 1 in a row sya, pero pwede ring 2 in a row pala etc DUPLICATES, which makes sense since higher chances of winning naman talaga if maraming possible successes sa move na un
 
+	//try: pag nag combi ie 2, + .2 - .1 since ung previous one in a row void na dahil 2 in a row na?, so if nag3, +.3 -.2
+	//so parang essentially + .1 lang -_- TRY 
 	private static double checkHowManyInARow(char player, int row, int col){
 		double retDouble = 0;
 
