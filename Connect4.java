@@ -5,6 +5,7 @@ public class Connect4{
 	private static boolean endGame = false;
 	private static UI gameUI;
 
+	private static 
 	public Connect4(){
 		initializeBoard();
 	}
@@ -131,6 +132,8 @@ public class Connect4{
 	// Consider only ung may open positions pa
 
 	//Dapat may magssave ng stateScores ni player 1 and 2 doon sa currentState
+
+	// sa tree, computation ng statescore ay iincrement lang from parent, in favor of AI agent pa rin 
 
 
 	private static double getStateScore(char player, int row, int col, double myMaterial, double oppMaterial){

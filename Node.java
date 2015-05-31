@@ -3,6 +3,10 @@ import java.util.HashMap;
 class Node{
 	HashMap<Integer, String> config;
 	double score;
+	double myMaterial;
+	double oppMaterial;
+	char player; //kung sinong nagplay ng move na yon
+
 	public Node(HashMap<Integer, String> newConfig, double newScore){
 		config = newConfig;
 		score = newScore;
