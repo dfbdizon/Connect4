@@ -524,49 +524,49 @@ public class Connect4{
 
 	private static char getLeft(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0'; //null
-		if(col != 1) retChar = board.get(col-1).charAt(row);
+		if(col > 1) retChar = board.get(col-1).charAt(row);
 		return retChar;
 	}
 
 	private static char getRight(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
-		if(col != 7) retChar = board.get(col+1).charAt(row);
+		if(col < 7) retChar = board.get(col+1).charAt(row);
 		return retChar;
 	}
 
 	private static char getUp(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
-		if(row != 5 ) retChar = board.get(col).charAt(row+1);
+		if(row < 5 ) retChar = board.get(col).charAt(row+1);
 		return retChar;
 	}
 
 	private static char getDown(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
-		if(row != 0) retChar = board.get(col).charAt(row-1);
+		if(row > 0) retChar = board.get(col).charAt(row-1);
 		return retChar;
 	}
 
 	private static char getUpLeft(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
-		if(row != 5 && col != 1) retChar = board.get(col-1).charAt(row+1);
+		if(row < 5 && col > 1) retChar = board.get(col-1).charAt(row+1);
 		return retChar;
 	}
 
 	private static char getUpRight(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
-		if(row != 5 && col != 7) retChar = board.get(col+1).charAt(row+1);
+		if(row < 5 && col < 7) retChar = board.get(col+1).charAt(row+1);
 		return retChar;
 	}
 
 	private static char getDownLeft(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
-		if(row != 0 && col != 1) retChar = board.get(col-1).charAt(row-1);
+		if(row > 0 && col > 1) retChar = board.get(col-1).charAt(row-1);
 		return retChar;
 	}
 
 	private static char getDownRight(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
-		if(row != 0 && col != 7) retChar = board.get(col+1).charAt(row-1);
+		if(row > 0 && col < 7) retChar = board.get(col+1).charAt(row-1);
 		return retChar;
 	}
 
