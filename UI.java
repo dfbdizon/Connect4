@@ -241,7 +241,7 @@ public class UI extends JFrame {
     
     public int getOccupiedRow(int col){
         String currentCol = config.get(col);
-        for(int i = 0; i < 6; i++){
+        for(int i = 0; i < 5; i++){
             if(currentCol.charAt(i) == '0') return(i - 1);
         }
         return 5;

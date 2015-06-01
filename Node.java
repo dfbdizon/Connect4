@@ -3,12 +3,10 @@ import java.util.HashMap;
 
 class Node{
 	HashMap<Integer, String> config;
-
+	Node parent;
 	double score, myMaterial, oppMaterial, alpha, beta, value;
 	ArrayList<Node> children = new ArrayList<Node>();
 	char player; //kung sinong nagplay ng move na yon
-	double alpha;
-	double beta;
 
 	Node root;
 	int row, col;
@@ -19,8 +17,8 @@ class Node{
 	// }
 	public Node(Node parent){
 		this.parent = parent;
-		alpha = Integer.MAX_VALUE;
-		beta = Integer.MIN_VALUE;
+		alpha = Integer.MIN_VALUE;
+		beta = Integer.MAX_VALUE;
 	}
 	public HashMap<Integer, String> getConfig(){
 		return config;
@@ -75,15 +73,6 @@ class Node{
 		this.score = Connect4.getStateScore(this.myMaterial, this.oppMaterial);
 	}
 	public void addChild(Node node){
-<<<<<<< HEAD
-		if(player=='1')
-			node.player='2';
-		if(player=='2')
-			node.player='1';
-		node.oppMaterial=this.oppMaterial;
-		//node.myMaterial=Connect4.updateMaterial(node.player, this.row, this.col, this.myMaterial, node.config);
-=======
->>>>>>> origin/master
 		children.add(node);
 	}
 	public void removeChild(int index){
