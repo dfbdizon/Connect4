@@ -19,12 +19,6 @@ public class Connect4{
 	public Connect4(){
 		initializeBoard();
 	}
-	/*
-	public static void moveAI(int player){
-		int randomCol = rand.nextInt(7) + 1;
-		//System.out.println("move: add to column " + randomCol);
-		gameUI.addToken(randomCol, player);
-	}*/
 
 	public static void moveAI(){
 
@@ -49,7 +43,7 @@ public class Connect4{
 			int move = Connect4.MinMax();
 			col = move;
 			updateRootAI();
-			System.out.println("move: add to column " + randomCol);
+			System.out.println("move: add to column " + move);
 			gameUI.addToken(move, 1);
 
 		}
@@ -63,6 +57,7 @@ public class Connect4{
 			// root.myMaterial = .1;
 			// root.oppMaterial = .1;
 		}
+
 	}
 	public static void firstMove(){
 		gameUI.addToken(4, 1);
@@ -90,18 +85,9 @@ public class Connect4{
 			if(player == 1) return 4;
 			else return 3;
 		}
-		else if(isDraw()){
-			return 5;
-		}
+		//else if (Check if draw)
 		if(player == 1) return 2;
 		else return 1;
-	}
-
-	private static boolean isDraw(){
-		for(int i = 1; i <= 7; i++){
-			if(board.get(i).indexOf("0") != -1) return false;
-		}
-		return true;
 	}
 
 	@SuppressWarnings("unused")
@@ -198,7 +184,7 @@ public class Connect4{
 	}
 
 	public void setUI(UI gameUI){
-		//System.out.println("set ui");
+		System.out.println("set ui");
 		this.gameUI = gameUI;
 		try{
 			Thread.sleep(1000);
@@ -241,6 +227,7 @@ public class Connect4{
 		char left2, right2, up2, down2, upRight2, upLeft2, downRight2, downLeft2;
 		
 		left = getLeft(col, row, board);
+		System.out.println("row" + row);
 		right = getRight(col, row, board);
 		up = getUp(col, row, board);
 		down = getDown(col, row, board);
@@ -544,6 +531,7 @@ public class Connect4{
 
 	private static char getRight(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
+		System.out.println(row);
 		if(col < 7) retChar = board.get(col+1).charAt(row);
 		return retChar;
 	}
@@ -586,13 +574,14 @@ public class Connect4{
 
 	
 //	private static int MinMax(int col, int row, char player) {
-	/*
-	int MinMax() {
+	
+	static int MinMax() {
 		//Tree mainTree = new Tree();
 		//mainTree.setRootNode(new Node(board, 0));
 		//Node root = mainTree.returnRoot();
 		ArrayList<Node> children = expand(root);
-		return MaxMove (root);
+		children = root.children;
+		return children.indexOf(MaxMove (root, 0, Integer.MIN_VALUE, Integer.MAX_VALUE));
 	}
 	 
 	void MinMaxIterative(int col, int row, char player){
@@ -608,41 +597,49 @@ public class Connect4{
 		}
 
 	}
-	int MaxMove(Node root) {
-			ArrayList<Node> children = root.children;
-			Node bestMove = children.get(0);//initialize best move
-			Node currMove = children.get(1);
-			for(int i = 0; i <= children.size()-1; i++) {//iterate on each move
-				if (getStateScores('2', row, tree.children.indexOf(MinMove(currMove))) > getStateScores('2', row, tree.children.indexOf(bestMove))) 
-					bestMove = currMove;
-			}
-			return tree.children.indexOf(bestMove)+1;
-		}
-	}
-	 
-	private static int MinMove(int col, int row, char player, Tree tree) {
-		Node bestMove = tree.getChild(1);
-		Node currMove = tree.getChild(0);//initialize best move
-		Node root = currMove;
-		Tree currTree = new Tree();
-		currTree.addChild(new Node(root.move(1), getStateScores));
-		currTree.addChild(new Node(root.move(2), getStateScores));
-		currTree.addChild(new Node(root.move(3), getStateScores));
-		currTree.addChild(new Node(root.move(4), getStateScores));
-		currTree.addChild(new Node(root.move(5), getStateScores));
-		currTree.addChild(new Node(root.move(6), getStateScores));
-		currTree.addChild(new Node(root.move(7), getStateScores));
-		for(int i = 0; i <= tree.children.size()-1; i++) {//iterate on all moves
-			if (getStateScores('2', row, tree.children.indexOf(MaxMove(col, row, '1', currTree))) > getStateScores('2', row, tree.children.indexOf(bestMove))) 
+	static Node MaxMove(Node root, int depth, double alpha, double beta) {
+		if(depth>7)
+			return root;
+		expand(root);
+		System.out.println("depth" + depth);
+		ArrayList<Node> children = root.children;
+		Node bestMove = children.get(0);//initialize best move
+		Node currMove = children.get(1);
+		for(int i = 0; i <= children.size()-1; i++) {//iterate on each move
+			currMove = children.get(i);
+			alpha=Math.max(alpha,bestMove.score);
+			depth=depth+1;
+			if ((MinMove(currMove, depth, alpha, beta).score) > (bestMove).score)
 				bestMove = currMove;
-		}
-		return tree.children.indexOf(bestMove)+1;
+			}
+		System.out.println(children.get(children.indexOf(bestMove)));
+		return bestMove;
 	}
-	*/
+	
+	private static Node MinMove(Node root, int depth, double alpha, double beta) {
+		if(depth>7)
+			return root;
+		expand(root);
+		System.out.println("depth" + depth);
+		ArrayList<Node> children = root.children;
+		Node bestMove = children.get(0);
+		Node currMove = children.get(1);//initialize best move
+		Node root2 = currMove;
+		for(int i = 0; i <= children.size()-1; i++) {//iterate on all moves
+			beta=Math.min(beta, bestMove.score);
+			depth = depth+1;
+			if (MaxMove(currMove, depth++, alpha, beta).score > (bestMove).score) 
+				bestMove = currMove;
+			//beta=Math.min(beta, bestMove.score);
+		}
+		System.out.println(children.get(children.indexOf(bestMove)));
+		return bestMove;
+	}
+	/*
 	private static int MinMax(){
 		root.setAlpha(Integer.MIN_VALUE);
 		root.setBeta(Integer.MAX_VALUE);
-		int retval = 0;
+		int retval = 1, loop2 =0;
 		//int alpha = Integer.MIN_VALUE, beta = Integer.MAX_VALUE;//Step 1
 		ArrayList<Node> children = new ArrayList<Node>();
 		expand(root);
@@ -652,9 +649,11 @@ public class Connect4{
 		Node firstChild = children.get(0), currNode = firstChild, rootNode;
 		for(int i = 0;  i <= 3; i++){
 			System.out.println(i+"iiiii");
-			firstChild = children.get(i);
+			firstChild = children.get(0);
 			firstChild.setAlpha(root.alpha);
 			firstChild.setBeta(root.beta);
+			System.out.println("root: " + root.alpha);
+			System.out.println("root: " + root.beta);
 			children = expand(firstChild);
 			children = firstChild.children;
 		}
@@ -666,83 +665,103 @@ public class Connect4{
 		//questionable ang seconde statement sa while loop
 		while(!rootNode.equals(root)&&loop!=6){//habang di pa bumabalik sa root or habang less than the number of possible children palang ang naeexplore
 			children = rootNode.children;
-			//System.out.println("running" + children.size());
+			System.out.println("running" + children.size());
 			for(int i = 0; i <= children.size()-1; i++){//loop on all children of firstChild
-				//System.out.println("heeeer");
+				System.out.println("heeeer" + children.size());
 				currNode = children.get(i);
-				score = currNode.getScore();
+				score = currNode.score;
+				System.out.println(score + "scooore");
 				if(rootNode.player==PLAYER)//Kapag player ibig sabihin nagmiminimize ka
 					rootNode.setBeta(Math.min(rootNode.beta, score));
 				else
 					rootNode.setAlpha(Math.max(rootNode.alpha, score));
-				if(currNode.alpha>=currNode.beta){
+				System.out.println(rootNode.beta + "beta");
+				System.out.println(rootNode.alpha + "alpha");
+				if(rootNode.alpha>=rootNode.beta){
 //					rootNode = (currNode.parent).parent;
 //					currNode.parent.value = currNode.value;
 //					children = rootNode.children;
+					System.out.print(currNode.alpha + " " + currNode.beta);
 					break;
 				}
 			}
-			//System.out.println("running:/");
+//			System.out.println("rootnode: "+ rootNode.player);
 			if(rootNode.player==PLAYER)
 				rootNode.value = rootNode.beta;
 			else
 				rootNode.value = rootNode.alpha;
-			rootNode = (rootNode).parent;
+			rootNode = rootNode.parent;
+			System.out.println("rootnode: "+ rootNode.player);
+			
 			children = rootNode.children;
 			if(rootNode.player==AI)
 				rootNode.setAlpha(Math.max(currNode.parent.value, rootNode.alpha));
 			else
 				rootNode.setBeta(Math.min(currNode.parent.value, rootNode.beta));
+			System.out.println("children.indexOf(currNode.parent)+1: "+ children.indexOf(currNode.parent)+1);
 			
-			if(children.size()-1>=children.indexOf(currNode.parent)+1){
+			if(children.size()>=children.indexOf(currNode.parent)+1&&loop2<6){
 				rootNode = children.get(children.indexOf(currNode.parent)+1); //go to next kapatid
 			//	retval = children.indexOf(currNode.parent)+1;
+				System.out.println("go to next kapatid");
 				rootNode.setAlpha(rootNode.parent.alpha);
 				rootNode.setBeta(rootNode.parent.beta);
+				System.out.println("alpha: " + rootNode.parent.alpha);
+				System.out.println("beta: " + rootNode.parent.beta);
+				loop2++;
 			}else{
-				System.out.println("2");
+				System.out.println("elsee");
 				if(rootNode.player==PLAYER)
 					rootNode.value = rootNode.beta;
 				else
 					rootNode.value = rootNode.alpha;
+				System.out.println(rootNode.value + "1value");
+				
 				rootNode = rootNode.parent;
-				if(rootNode.player==AI)
+				if(rootNode.player==AI){
+					System.out.println(index+"shet indezx");
 					rootNode.setAlpha(Math.max(rootNode.children.get(index).value, rootNode.alpha));//posibleng mali
-				else
+				}else
 					rootNode.setBeta(Math.min(rootNode.children.get(index).value, rootNode.beta));//posibleng mali
 				if(rootNode.player==PLAYER)
 					rootNode.value = rootNode.beta;
 				else
 					rootNode.value = rootNode.alpha;
+				System.out.println(rootNode.value + "value");
 				children = rootNode.children;
-				if(children.size()-1>=index+1){
+				if(children.size()-1>=index+1&&index<5){
 					index++;
 					firstChild = children.get(index);
+					System.out.println(index + "index");
 					currNode = firstChild;
 					for(int i = 0;  i <= 3; i++){
-						firstChild = children.get(i);
+						firstChild = children.get(0);
 						firstChild.setAlpha(root.alpha);
 						firstChild.setBeta(root.beta);
-						children = expand(firstChild);
+						expand(firstChild);
 						children = firstChild.children;
 					}
 					rootNode = firstChild;
 					currNode = children.get(0);		
 				}else{
-					retval = 0;
-					for(int i = 0; i <= children.size()-1; i++){
-						if(rootNode.children.get(i).value>rootNode.children.get(retval).value)
-							retval = i;			
+					retval = 1;
+					for(int i = 0; i <= 5; i++){
+						System.out.println(rootNode.children.get(i).value + " "+ rootNode.children.get(retval).value);
+						if(rootNode.children.get(i).value>rootNode.children.get(retval).value){
+							retval = i+1;		
+						}System.out.println("huhuhu" + i);
 					}
-					System.out.println("huhuhu");
+					System.out.println("huhuhu" + retval);
 					return retval;
 				}
 			}
-			loop++;
 		}
+
+		loop++;
+		System.out.println(retval);
 		return retval;
 	}
-
+*/
 	private static void updateRootAI(){
 		Node temp;
 		for(int i = 0; i < root.children.size(); i++){
@@ -765,6 +784,7 @@ public class Connect4{
 		}	
 	}
 	private static ArrayList<Node> expand(Node parent) {
+		parent.children.clear();
 		for(int i = 1; i < 8; i++){
 			Node node = new Node(parent);
 			node.setPlayer();
