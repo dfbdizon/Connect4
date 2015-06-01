@@ -19,6 +19,12 @@ public class Connect4{
 	public Connect4(){
 		initializeBoard();
 	}
+	/*
+	public static void moveAI(int player){
+		int randomCol = rand.nextInt(7) + 1;
+		//System.out.println("move: add to column " + randomCol);
+		gameUI.addToken(randomCol, player);
+	}*/
 
 	public static void moveAI(){
 
@@ -57,7 +63,6 @@ public class Connect4{
 			// root.myMaterial = .1;
 			// root.oppMaterial = .1;
 		}
-
 	}
 	public static void firstMove(){
 		gameUI.addToken(4, 1);
@@ -85,9 +90,18 @@ public class Connect4{
 			if(player == 1) return 4;
 			else return 3;
 		}
-		//else if (Check if draw)
+		else if(isDraw()){
+			return 5;
+		}
 		if(player == 1) return 2;
 		else return 1;
+	}
+
+	private static boolean isDraw(){
+		for(int i = 1; i <= 7; i++){
+			if(board.get(i).indexOf("0") != -1) return false;
+		}
+		return true;
 	}
 
 	@SuppressWarnings("unused")
@@ -184,7 +198,7 @@ public class Connect4{
 	}
 
 	public void setUI(UI gameUI){
-		System.out.println("set ui");
+		//System.out.println("set ui");
 		this.gameUI = gameUI;
 		try{
 			Thread.sleep(1000);
