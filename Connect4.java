@@ -11,7 +11,7 @@ public class Connect4{
 	private final char PLAYER = '2';
 	private final char AI = '1';
 
-	Node root;
+	private static Node root;
 
 	private static boolean isFirstMoveAI = true;
 	private static boolean isFirstMoveOpp = true;
@@ -40,7 +40,7 @@ public class Connect4{
 				updateRootOpp();
 			}
 			int randomCol = rand.nextInt(7) + 1;
-			int move = minMax();
+			int move = MinMax();
 			col = move;
 			updateRootAI();
 			System.out.println("move: add to column " + randomCol);
@@ -710,8 +710,8 @@ public class Connect4{
 		Node temp;
 		for(int i = 0; i < root.children.size(); i++){
 			temp = root.children.get(i);
-			if(temp.col == this.col){
-				this.root = temp;
+			if(temp.col == col){
+				root = temp;
 				break;
 			}
 		}
@@ -721,8 +721,8 @@ public class Connect4{
 		Node temp; 
 		for(int i = 0; i < root.children.size(); i++){
 			temp = root.children.get(i);
-			if(temp.col == this.col){
-				this.root = temp;
+			if(temp.col == col){
+				root = temp;
 				break;
 			}
 		}	

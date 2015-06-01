@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 class Node{
 	HashMap<Integer, String> config;
-	double score, myMaterial, oppMaterial, alpha, beta;
+	double score, myMaterial, oppMaterial, alpha, beta, value;
 	ArrayList<Node> children = new ArrayList<Node>();
 	char player; //kung sinong nagplay ng move na yon
 	Node parent;
