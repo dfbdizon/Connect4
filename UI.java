@@ -216,12 +216,14 @@ public class UI extends JFrame {
      
     public void addToken(int col, int player) {
         JLabel tokenL = new JLabel();
+        System.out.println("Column: " + col);
         /* If human player */
         if(turn == playerNum) tokenL.setIcon(playerToken);
         else tokenL.setIcon(aiToken);
 
         Dimension tSize = tokenL.getPreferredSize();
         int occupiedRow = getOccupiedRow(col) + 1;
+        System.out.println("row: " + occupiedRow);
         if (occupiedRow < 6) {
             final int tokenW = 59, tokenH = 60;
             int initPos = 74, addPos = tokenW+11;
@@ -241,7 +243,7 @@ public class UI extends JFrame {
     
     public int getOccupiedRow(int col){
         String currentCol = config.get(col);
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 6; i++){
             if(currentCol.charAt(i) == '0') return(i - 1);
         }
         return 5;
