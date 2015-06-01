@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 class Node{
 	HashMap<Integer, String> config;
-	double score, myMaterial, oppMaterial, alpha, beta, value;
+	double score, myMaterial, oppMaterial, alpha, beta;
 	ArrayList<Node> children = new ArrayList<Node>();
 	char player; //kung sinong nagplay ng move na yon
 	Node parent;
@@ -15,6 +15,8 @@ class Node{
 	// }
 	public Node(Node parent){
 		this.parent = parent;
+		alpha = Integer.MAX_VALUE;
+		beta = Integer.MIN_VALUE;
 	}
 	public HashMap<Integer, String> getConfig(){
 		return config;
