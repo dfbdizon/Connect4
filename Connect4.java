@@ -598,7 +598,7 @@ public class Connect4{
 
 	}
 	static Node MaxMove(Node root, int depth, double alpha, double beta) {
-		if(depth>7)
+		if(depth>8)
 			return root;
 		expand(root);
 		System.out.println("depth" + depth);
@@ -617,7 +617,7 @@ public class Connect4{
 	}
 	
 	private static Node MinMove(Node root, int depth, double alpha, double beta) {
-		if(depth>7)
+		if(depth>8)
 			return root;
 		expand(root);
 		System.out.println("depth" + depth);
