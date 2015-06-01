@@ -44,7 +44,7 @@ public class Connect4{
 			col = move;
 			updateRootAI();
 			System.out.println("move: add to column " + randomCol);
-			gameUI.addToken(randomCol, 1);
+			gameUI.addToken(move, 1);
 
 		}
 		else if(isFirstMoveAI){
