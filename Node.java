@@ -53,11 +53,11 @@ class Node{
 	public void setScores(){	
 		if(player == '1'){ //si 1 ung gumalaw
 			this.oppMaterial = parent.oppMaterial;
-			this.myMaterial = Connect4.updateMaterial(this.player, this.row, this.col, this.myMaterial); 
+			this.myMaterial = Connect4.updateMaterial(this.player, this.row, this.col, this.myMaterial, this.config); 
 		}
 		else if(player == '2'){ //si 2 ung gumalaw
 			this.myMaterial = parent.myMaterial;
-			this.oppMaterial = Connect4.updateMaterial(this.player, this.row, this.col, this.oppMaterial);
+			this.oppMaterial = Connect4.updateMaterial(this.player, this.row, this.col, this.oppMaterial, this.config);
 		}
 		this.score = Connect4.getStateScore(this.myMaterial, this.oppMaterial);
 	}
