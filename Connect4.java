@@ -524,7 +524,7 @@ public class Connect4{
 
 	private static char getLeft(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0'; //null
-		if(col > 1) retChar = board.get(col-1).charAt(row);
+		if(col > 2) retChar = board.get(col-1).charAt(row);
 		return retChar;
 	}
 
@@ -596,8 +596,8 @@ public class Connect4{
 	}
 	int MaxMove(Node root) {
 			ArrayList<Node> children = root.children;
-			Node bestMove = tree.getChild(0);//initialize best move
-			Node currMove = tree.getChild(1);
+			Node bestMove = children.get(0);//initialize best move
+			Node currMove = children.get(1);
 			Node root = currMove;
 			Tree currTree = new Tree();
 			currTree.addChild(new Node(root.move(1), getStateScores));
@@ -640,7 +640,9 @@ public class Connect4{
 		int retval = 0;
 		//int alpha = Integer.MIN_VALUE, beta = Integer.MAX_VALUE;//Step 1
 		ArrayList<Node> children = expand(root);
+		children = root.children;
 		int index = 0;
+		//System.out.println()
 		Node firstChild = children.get(0), currNode = firstChild, rootNode;
 		for(int i = 0;  i <= 3; i++){
 			firstChild = children.get(i);
