@@ -528,7 +528,7 @@ public class Connect4{
 	}
 
 	
-	private static int MinMax(int col, int row, char player) {
+//	private static int MinMax(int col, int row, char player) {
 	/*
 	int MinMax(int col, int row, char player) {
 		Tree mainTree = new Tree();
@@ -557,7 +557,7 @@ public class Connect4{
 		}
 
 	}*/
-	private static int MaxMove(int col, int row, char player, Tree tree) {
+//	private static int MaxMove(int col, int row, char player, Tree tree) {
 	/*
 	int MaxMove(int col, int row, char player, Tree tree) {
 		if (hasWinner(col, row, player)) {
@@ -603,7 +603,6 @@ public class Connect4{
 	}*/
 	
 	double MinMax(Node root){
-		root.setRoot(root);
 		root.setAlpha(Integer.MIN_VALUE);
 		root.setBeta(Integer.MAX_VALUE);
 		//int alpha = Integer.MIN_VALUE, beta = Integer.MAX_VALUE;//Step 1
@@ -627,7 +626,7 @@ public class Connect4{
 				else
 					currNode.setAlpha(Math.max(currNode.alpha, score));
 				if(currNode.alpha>=currNode.beta){
-					rootNode = (currNode.root).root;
+					rootNode = (currNode.parent).parent;
 			//		currNode.root.value = currNode.alpha;
 					children = rootNode.children;
 					i = 0;
