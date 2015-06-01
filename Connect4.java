@@ -581,7 +581,7 @@ public class Connect4{
 		return MaxMove (root);
 	}
 	 
-	int MinMaxIterative(int col, int row, char player){
+	void MinMaxIterative(int col, int row, char player){
 		boolean isMax = true;
 		while(!hasWinner(col, row, player)){
 			if(isMax){
@@ -595,10 +595,7 @@ public class Connect4{
 
 	}
 	int MaxMove(Node root) {
-		if (hasWinner(col, row, player)) {
-			return 9;//EvalGameState(config);
-		}
-		else {
+			ArrayList<Node> children = root.children;
 			Node bestMove = tree.getChild(0);//initialize best move
 			Node currMove = tree.getChild(1);
 			Node root = currMove;
