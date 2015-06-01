@@ -571,20 +571,14 @@ public class Connect4{
 	}
 
 	
- //	private static int MinMax(int col, int row, char player) {
+//	private static int MinMax(int col, int row, char player) {
 	/*
-	int MinMax(int col, int row, char player) {
-		Tree mainTree = new Tree();
-		mainTree.setRootNode(new Node(board, 0));
-		Node root = mainTree.returnRoot();
-		mainTree.addChild(new Node(root.move(1), getStateScores));
-		mainTree.addChild(new Node(root.move(2), getStateScores));
-		mainTree.addChild(new Node(root.move(3), getStateScores));
-		mainTree.addChild(new Node(root.move(4), getStateScores));
-		mainTree.addChild(new Node(root.move(5), getStateScores));
-		mainTree.addChild(new Node(root.move(6), getStateScores));
-		mainTree.addChild(new Node(root.move(7), getStateScores));
-		return MaxMove (col, row, player, mainTree);
+	int MinMax() {
+		//Tree mainTree = new Tree();
+		//mainTree.setRootNode(new Node(board, 0));
+		//Node root = mainTree.returnRoot();
+		ArrayList<Node> children = expand(root);
+		return MaxMove (root);
 	}
 	 
 	int MinMaxIterative(int col, int row, char player){
@@ -599,10 +593,8 @@ public class Connect4{
 			}
 		}
 
-	}*/
-//	private static int MaxMove(int col, int row, char player, Tree tree) {
-	/*
-	int MaxMove(int col, int row, char player, Tree tree) {
+	}
+	int MaxMove(Node root) {
 		if (hasWinner(col, row, player)) {
 			return 9;//EvalGameState(config);
 		}
@@ -643,8 +635,8 @@ public class Connect4{
 				bestMove = currMove;
 		}
 		return tree.children.indexOf(bestMove)+1;
-	}*/
-	
+	}
+	*/
 	private static int MinMax(){
 		root.setAlpha(Integer.MIN_VALUE);
 		root.setBeta(Integer.MAX_VALUE);
@@ -653,7 +645,7 @@ public class Connect4{
 		ArrayList<Node> children = expand(root);
 		int index = 0;
 		Node firstChild = children.get(0), currNode = firstChild, rootNode;
-		for(int i = 0;  i <= 9; i++){
+		for(int i = 0;  i <= 3; i++){
 			firstChild = children.get(i);
 			firstChild.setAlpha(root.alpha);
 			firstChild.setBeta(root.beta);
@@ -665,7 +657,7 @@ public class Connect4{
 		//questionable ang seconde statement sa while loop
 		while(!rootNode.equals(root)||children.indexOf(rootNode.children.get(index))<=children.size()-1){//habang di pa bumabalik sa root or habang less than the number of possible children palang ang naeexplore
 			children = rootNode.children;
-			for(int i = 0; i <= 6; i++){//loop on all children of firstChild
+			for(int i = 0; i <= children.size()-1; i++){//loop on all children of firstChild
 				currNode = children.get(i);
 				score = currNode.getScore();
 				if(rootNode.player==PLAYER)//Kapag player ibig sabihin nagmiminimize ka
@@ -714,7 +706,7 @@ public class Connect4{
 					index++;
 					firstChild = children.get(index);
 					currNode = firstChild;
-					for(int i = 0;  i <= 9; i++){
+					for(int i = 0;  i <= 3; i++){
 						firstChild = children.get(i);
 						firstChild.setAlpha(root.alpha);
 						firstChild.setBeta(root.beta);
@@ -724,7 +716,7 @@ public class Connect4{
 					currNode = children.get(0);		
 				}else{
 					retval = 0;
-					for(int i = 0; i <= 6; i++){
+					for(int i = 0; i <= children.size()-1; i++){
 						if(rootNode.children.get(i).value>rootNode.children.get(retval).value)
 							retval = i;			
 					}

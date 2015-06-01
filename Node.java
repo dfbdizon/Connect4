@@ -58,6 +58,7 @@ class Node{
 		else{
 			retVal = false; //ibig sabihin puno na
 		}
+		return retVal;
 	}
 	public void setScores(){	
 		if(player == '1'){ //si 1 ung gumalaw
