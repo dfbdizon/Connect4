@@ -624,7 +624,7 @@ public class Connect4{
 			for(int i = 0; i <= 6; i++){//loop on all children of firstChild
 				currNode = children.get(i);
 				score = currNode.getScore();
-				if(currNode.player==AI)//Kapag player ibig sabihin nagmiminimize ka
+				if(rootNode.player==PLAYER)//Kapag player ibig sabihin nagmiminimize ka
 					rootNode.setBeta(Math.min(rootNode.beta, score));
 				else
 					rootNode.setAlpha(Math.max(rootNode.alpha, score));
