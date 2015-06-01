@@ -85,6 +85,4 @@ class Node{
 	public Node getChild(int index){
 		return (children.get(index));
 	}
-	
-	
 }
