@@ -608,6 +608,7 @@ public class Connect4{
 	double MinMax(Node root){
 		root.setAlpha(Integer.MIN_VALUE);
 		root.setBeta(Integer.MAX_VALUE);
+		int retval = 0;
 		//int alpha = Integer.MIN_VALUE, beta = Integer.MAX_VALUE;//Step 1
 		ArrayList<Node> children = expand(root);
 		Node firstChild = children.get(0), currNode = firstChild, rootNode;
@@ -649,6 +650,7 @@ public class Connect4{
 			
 			if(children.size()-1>=children.indexOf(currNode.parent)+1){
 				rootNode = children.get(children.indexOf(currNode.parent)+1); //go to next kapatid
+				retval = children.indexOf(currNode.parent)+1;
 				rootNode.setAlpha(rootNode.parent.alpha);
 				rootNode.setBeta(rootNode.parent.beta);
 			}else{
@@ -659,7 +661,7 @@ public class Connect4{
 				rootNode = (currNode.parent).parent.parent;
 			}
 		}
-		return currNode.alpha;
+		return retval;
 	}
 	
 	private ArrayList<Node> expand(Node root) {
