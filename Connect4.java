@@ -700,7 +700,10 @@ public class Connect4{
 				else
 					rootNode.value = rootNode.alpha;
 				rootNode = rootNode.parent;
-
+				if(rootNode.player==AI)
+					rootNode.setAlpha(Math.max(rootNode.children.get(index).value, rootNode.alpha));//posibleng mali
+				else
+					rootNode.setBeta(Math.min(rootNode.children.get(index).value, rootNode.beta));//posibleng mali
 				if(rootNode.player==PLAYER)
 					rootNode.value = rootNode.beta;
 				else
@@ -724,6 +727,7 @@ public class Connect4{
 						if(rootNode.children.get(i).value>rootNode.children.get(retval).value)
 							retval = i;			
 					}
+					System.out.println("huhuhu");
 					return retval;
 				}
 			}
