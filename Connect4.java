@@ -607,11 +607,12 @@ public class Connect4{
 		Node currMove = children.get(1);
 		for(int i = 0; i <= children.size()-1; i++) {//iterate on each move
 			currMove = children.get(i);
-			alpha=Math.max(alpha,bestMove.score);
 			depth=depth+1;
 			if ((MinMove(currMove, depth, alpha, beta).score) > (bestMove).score)
 				bestMove = currMove;
 			}
+		alpha=Math.max(alpha,bestMove.score);
+		
 		System.out.println(children.get(children.indexOf(bestMove)));
 		return bestMove;
 	}
@@ -625,11 +626,12 @@ public class Connect4{
 		Node bestMove = children.get(0);
 		Node currMove = children.get(1);//initialize best move
 		for(int i = 0; i <= children.size()-1; i++) {//iterate on all moves
-			beta=Math.min(beta, bestMove.score);
 			depth = depth+1;
 			currMove=children.get(i);
 			if (MaxMove(currMove, depth, alpha, beta).score > (bestMove).score) 
 				bestMove = currMove;
+			beta=Math.min(beta, bestMove.score);
+			
 			//beta=Math.min(beta, bestMove.score);
 		}
 		System.out.println(children.get(children.indexOf(bestMove)));
