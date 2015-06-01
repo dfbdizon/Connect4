@@ -211,7 +211,7 @@ public class Connect4{
 
 	protected static double updateMaterial(char player, int row, int col, double prevMaterial, HashMap<Integer, String> board){
 		double retDouble = prevMaterial;
-		retDouble += checkHowManyInARow(player, row, col, board);
+		retDouble += checkHowManyInARow(player, row, col, HashMap<Integer, String> board);
 		return retDouble;
 	}
 	//do I count ung rows na wala naman na pagasa makabuo pa ng 4? this implementation, NO
