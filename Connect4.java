@@ -7,19 +7,68 @@ public class Connect4{
 	private static boolean endGame = false;
 	private static UI gameUI;
 	private static Random rand = new Random();
+	private static int col;
+	private final static char PLAYER = '2';
+	private final static char AI = '1';
+
+	private static Node root;
+
+	private static boolean isFirstMoveAI = true;
+	private static boolean isFirstMoveOpp = true;
 
 	public Connect4(){
 		initializeBoard();
 	}
+	/*
 	public static void moveAI(int player){
 		int randomCol = rand.nextInt(7) + 1;
 		//System.out.println("move: add to column " + randomCol);
 		gameUI.addToken(randomCol, player);
+	}*/
+
+	public static void moveAI(){
+
+		//dito ata tatawagin ung minimax
+		//so board lang meron dito
+		if(!isFirstMoveAI){
+			if(isFirstMoveOpp){ //base case na ito
+				isFirstMoveOpp = false;
+				root = new Node(null);
+				root.player = '2'; //si 2 ung huli kasing gumalaw
+				root.row = 1;
+				root.col = 4;
+				root.myMaterial = .1;
+				root.oppMaterial = .1;
+				root.score = 0;
+				root.config = (HashMap<Integer, String>)board.clone();
+			}
+			else{
+				updateRootOpp();
+			}
+			int randomCol = rand.nextInt(7) + 1;
+			int move = Connect4.MinMax();
+			col = move;
+			updateRootAI();
+			System.out.println("move: add to column " + randomCol);
+			gameUI.addToken(randomCol, 1);
+
+		}
+		else if(isFirstMoveAI){
+			firstMove();
+			isFirstMoveAI = false;
+			// root = new Node(null); //base case, assuming first player si AI lagi, and sya si 1
+			// root.player = '1';
+			// root.row = 1;
+			// root.col = 4;
+			// root.myMaterial = .1;
+			// root.oppMaterial = .1;
+		}
 	}
 	public static void firstMove(){
 		gameUI.addToken(4, 1);
 	}
 	public static int addPiece(int column, int row, int player){
+		if(player == 2) col = column;
 		String currentCol = board.get(column);
 		String newCol;
 		char token;
@@ -169,57 +218,55 @@ public class Connect4{
 	//Dapat may magssave ng stateScores ni player 1 and 2 doon sa currentState
 
 	// sa tree, computation ng statescore ay iincrement lang from parent, in favor of AI agent pa rin 
-
-
-	private static double getStateScore(char player, int row, int col, double myMaterial, double oppMaterial){
-		String currentColumn;
-		char currentPiece;
+	public static double getStateScore(double myMaterial, double oppMaterial){
 		double retDouble = myMaterial - oppMaterial;
 		return retDouble;
 	}
-/*
-	protected static double updateMaterial(char player, int row, int col, double prevMaterial){
+
+	protected static double updateMaterial(char player, int row, int col, double prevMaterial, HashMap<Integer, String> board){
 		double retDouble = prevMaterial;
-		retDouble += checkHowManyInARow(player, row, col);
+		retDouble += checkHowManyInARow(player, row, col, board);
 		return retDouble;
-	}*/
+	}
 	//do I count ung rows na wala naman na pagasa makabuo pa ng 4? this implementation, NO
 	//cinocount ko rin ung doubles, IE 1 in a row sya, pero pwede ring 2 in a row pala etc DUPLICATES, which makes sense since higher chances of winning naman talaga if maraming possible successes sa move na un
 
-	private static double checkHowManyInARow(char player, int row, int col){
+	//try: pag nag combi ie 2, + .2 - .1 since ung previous one in a row void na dahil 2 in a row na?, so if nag3, +.3 -.2
+	//so parang essentially + .1 lang -_- TRY 
+	private static double checkHowManyInARow(char player, int row, int col, HashMap<Integer, String> board){
 		double retDouble = 0;
 
 		char left, right, up, down, upRight, upLeft, downRight, downLeft;
 		char left1, right1, up1, down1, upRight1, upLeft1, downRight1, downLeft1;
 		char left2, right2, up2, down2, upRight2, upLeft2, downRight2, downLeft2;
 		
-		left = getLeft(col, row);
-		right = getRight(col, row);
-		up = getUp(col, row);
-		down = getDown(col, row);
-		upRight = getUpRight(col, row);
-		upLeft = getUpLeft(col, row);
-		downRight = getDownRight(col, row);
-		downLeft = getDownLeft(col, row);
+		left = getLeft(col, row, board);
+		right = getRight(col, row, board);
+		up = getUp(col, row, board);
+		down = getDown(col, row, board);
+		upRight = getUpRight(col, row, board);
+		upLeft = getUpLeft(col, row, board);
+		downRight = getDownRight(col, row, board);
+		downLeft = getDownLeft(col, row, board);
 
 		//get left nung nasa taas
-		left1 = getLeft(col-1, row);
-		right1 = getRight(col+1, row);
-		up1 = getUp(col, row+1);
-		down1 = getDown(col, row-1);
-		upRight1 = getUpRight(col+1, row+1);
-		upLeft1 = getUpLeft(col-1, row+1);
-		downRight1 = getDownRight(col+1, row-1);
-		downLeft1 = getDownLeft(col-1, row-1);
+		left1 = getLeft(col-1, row, board);
+		right1 = getRight(col+1, row, board);
+		up1 = getUp(col, row+1, board);
+		down1 = getDown(col, row-1, board);
+		upRight1 = getUpRight(col+1, row+1, board);
+		upLeft1 = getUpLeft(col-1, row+1, board);
+		downRight1 = getDownRight(col+1, row-1, board);
+		downLeft1 = getDownLeft(col-1, row-1, board);
 
-		left2 = getLeft(col-2, row);
-		right2 = getRight(col+2, row);
-		up2 = getUp(col, row+2);
-		down2 = getDown(col, row-2);
-		upRight2 = getUpRight(col+2, row+2);
-		upLeft2 = getUpLeft(col-2, row+2);
-		downRight2 = getDownRight(col+2, row-2);
-		downLeft2 = getDownLeft(col-2, row-2);
+		left2 = getLeft(col-2, row, board);
+		right2 = getRight(col+2, row, board);
+		up2 = getUp(col, row+2, board);
+		down2 = getDown(col, row-2, board);
+		upRight2 = getUpRight(col+2, row+2, board);
+		upLeft2 = getUpLeft(col-2, row+2, board);
+		downRight2 = getDownRight(col+2, row-2, board);
+		downLeft2 = getDownLeft(col-2, row-2, board);
 
 		//HORIZONTAL
 		//check if open ung left
@@ -489,71 +536,66 @@ public class Connect4{
 
 	}
 
-	private static char getLeft(int col, int row){
+	private static char getLeft(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0'; //null
-		if(col != 1) retChar = board.get(col-1).charAt(row);
+		if(col > 2) retChar = board.get(col-1).charAt(row);
 		return retChar;
 	}
 
-	private static char getRight(int col, int row){
+	private static char getRight(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
-		if(col != 7) retChar = board.get(col+1).charAt(row);
+		if(col < 7) retChar = board.get(col+1).charAt(row);
 		return retChar;
 	}
 
-	private static char getUp(int col, int row){
+	private static char getUp(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
-		if(row != 5 ) retChar = board.get(col).charAt(row+1);
+		if(row < 5 ) retChar = board.get(col).charAt(row+1);
 		return retChar;
 	}
 
-	private static char getDown(int col, int row){
+	private static char getDown(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
-		if(row != 0) retChar = board.get(col).charAt(row-1);
+		if(row > 0) retChar = board.get(col).charAt(row-1);
 		return retChar;
 	}
 
-	private static char getUpLeft(int col, int row){
+	private static char getUpLeft(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
-		if(row != 5 && col != 1) retChar = board.get(col-1).charAt(row+1);
+		if(row < 5 && col > 1) retChar = board.get(col-1).charAt(row+1);
 		return retChar;
 	}
 
-	private static char getUpRight(int col, int row){
+	private static char getUpRight(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
-		if(row != 5 && col != 7) retChar = board.get(col+1).charAt(row+1);
+		if(row < 5 && col < 7) retChar = board.get(col+1).charAt(row+1);
 		return retChar;
 	}
 
-	private static char getDownLeft(int col, int row){
+	private static char getDownLeft(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
-		if(row != 0 && col != 1) retChar = board.get(col-1).charAt(row-1);
+		if(row > 0 && col > 1) retChar = board.get(col-1).charAt(row-1);
 		return retChar;
 	}
 
-	private static char getDownRight(int col, int row){
+	private static char getDownRight(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
-		if(row != 0 && col != 7) retChar = board.get(col+1).charAt(row-1);
+		if(row > 0 && col < 7) retChar = board.get(col+1).charAt(row-1);
 		return retChar;
 	}
 
-
+	
+//	private static int MinMax(int col, int row, char player) {
 	/*
-	int MinMax(int col, int row, char player) {
-		Tree mainTree = new Tree();
-		mainTree.setRootNode(new Node(board, 0));
-		Node root = mainTree.returnRoot();
-		mainTree.addChild(new Node(root.move(1), getStateScores));
-		mainTree.addChild(new Node(root.move(2), getStateScores));
-		mainTree.addChild(new Node(root.move(3), getStateScores));
-		mainTree.addChild(new Node(root.move(4), getStateScores));
-		mainTree.addChild(new Node(root.move(5), getStateScores));
-		mainTree.addChild(new Node(root.move(6), getStateScores));
-		mainTree.addChild(new Node(root.move(7), getStateScores));
-		return MaxMove (col, row, player, mainTree);
+	int MinMax() {
+		//Tree mainTree = new Tree();
+		//mainTree.setRootNode(new Node(board, 0));
+		//Node root = mainTree.returnRoot();
+		ArrayList<Node> children = expand(root);
+		return MaxMove (root);
 	}
 	 
-	int MinMaxIterative(int col, int row, char player){
+	void MinMaxIterative(int col, int row, char player){
 		boolean isMax = true;
 		while(!hasWinner(col, row, player)){
 			if(isMax){
@@ -565,15 +607,11 @@ public class Connect4{
 			}
 		}
 
-	}*/
-	/*
-	int MaxMove(int col, int row, char player, Tree tree) {
-		if (hasWinner(col, row, player)) {
-			return 9;//EvalGameState(config);
-		}
-		else {
-			Node bestMove = tree.getChild(0);//initialize best move
-			Node currMove = tree.getChild(1);
+	}
+	int MaxMove(Node root) {
+			ArrayList<Node> children = root.children;
+			Node bestMove = children.get(0);//initialize best move
+			Node currMove = children.get(1);
 			Node root = currMove;
 			Tree currTree = new Tree();
 			currTree.addChild(new Node(root.move(1), getStateScores));
@@ -608,22 +646,131 @@ public class Connect4{
 				bestMove = currMove;
 		}
 		return tree.children.indexOf(bestMove)+1;
-	}*/
-	
-	int MinMax(Node root){
-		int alpha = Integer.MIN_VALUE, beta = Integer.MAX_VALUE;//Step 1
+	}
+	*/
+	private static int MinMax(){
+		root.setAlpha(Integer.MIN_VALUE);
+		root.setBeta(Integer.MAX_VALUE);
+		int retval = 0;
+		//int alpha = Integer.MIN_VALUE, beta = Integer.MAX_VALUE;//Step 1
 		ArrayList<Node> children = expand(root);
-		for(int i = 0;  i <= 9; i++){
-			Node firstChild = children.get(i);
+		children = root.children;
+		int index = 0;
+		//System.out.println()
+		Node firstChild = children.get(0), currNode = firstChild, rootNode;
+		for(int i = 0;  i <= 3; i++){
+			firstChild = children.get(i);
+			firstChild.setAlpha(root.alpha);
+			firstChild.setBeta(root.beta);
 			children = expand(firstChild);
 		}
-		
-		
-		return 0;
+		rootNode = firstChild;
+		currNode = children.get(0);
+		double score = 0;
+		//questionable ang seconde statement sa while loop
+		while(!rootNode.equals(root)||children.indexOf(rootNode.children.get(index))<=children.size()-1){//habang di pa bumabalik sa root or habang less than the number of possible children palang ang naeexplore
+			children = rootNode.children;
+			for(int i = 0; i <= children.size()-1; i++){//loop on all children of firstChild
+				currNode = children.get(i);
+				score = currNode.getScore();
+				if(rootNode.player==PLAYER)//Kapag player ibig sabihin nagmiminimize ka
+					rootNode.setBeta(Math.min(rootNode.beta, score));
+				else
+					rootNode.setAlpha(Math.max(rootNode.alpha, score));
+				if(currNode.alpha>=currNode.beta){
+//					rootNode = (currNode.parent).parent;
+//					currNode.parent.value = currNode.value;
+//					children = rootNode.children;
+					break;
+				}
+			}
+			if(rootNode.player==PLAYER)
+				rootNode.value = rootNode.beta;
+			else
+				rootNode.value = rootNode.alpha;
+			rootNode = (rootNode).parent;
+			children = rootNode.children;
+			if(rootNode.player==AI)
+				rootNode.setAlpha(Math.max(currNode.parent.value, rootNode.alpha));
+			else
+				rootNode.setBeta(Math.min(currNode.parent.value, rootNode.beta));
+			
+			if(children.size()-1>=children.indexOf(currNode.parent)+1){
+				rootNode = children.get(children.indexOf(currNode.parent)+1); //go to next kapatid
+			//	retval = children.indexOf(currNode.parent)+1;
+				rootNode.setAlpha(rootNode.parent.alpha);
+				rootNode.setBeta(rootNode.parent.beta);
+			}else{
+				if(rootNode.player==PLAYER)
+					rootNode.value = rootNode.beta;
+				else
+					rootNode.value = rootNode.alpha;
+				rootNode = rootNode.parent;
+				if(rootNode.player==AI)
+					rootNode.setAlpha(Math.max(rootNode.children.get(index).value, rootNode.alpha));//posibleng mali
+				else
+					rootNode.setBeta(Math.min(rootNode.children.get(index).value, rootNode.beta));//posibleng mali
+				if(rootNode.player==PLAYER)
+					rootNode.value = rootNode.beta;
+				else
+					rootNode.value = rootNode.alpha;
+				children = rootNode.children;
+				if(children.size()-1>=index+1){
+					index++;
+					firstChild = children.get(index);
+					currNode = firstChild;
+					for(int i = 0;  i <= 3; i++){
+						firstChild = children.get(i);
+						firstChild.setAlpha(root.alpha);
+						firstChild.setBeta(root.beta);
+						children = expand(firstChild);
+					}
+					rootNode = firstChild;
+					currNode = children.get(0);		
+				}else{
+					retval = 0;
+					for(int i = 0; i <= children.size()-1; i++){
+						if(rootNode.children.get(i).value>rootNode.children.get(retval).value)
+							retval = i;			
+					}
+					System.out.println("huhuhu");
+					return retval;
+				}
+			}
+		}
+		return retval;
 	}
-	
-	private ArrayList<Node> expand(Node root) {
-		//root.
+
+	private static void updateRootAI(){
+		Node temp;
+		for(int i = 0; i < root.children.size(); i++){
+			temp = root.children.get(i);
+			if(temp.col == col){
+				root = temp;
+				break;
+			}
+		}
+	}
+
+	private static void updateRootOpp(){
+		Node temp; 
+		for(int i = 0; i < root.children.size(); i++){
+			temp = root.children.get(i);
+			if(temp.col == col){
+				root = temp;
+				break;
+			}
+		}	
+	}
+	private static ArrayList<Node> expand(Node parent) {
+		for(int i = 1; i < 8; i++){
+			Node node = new Node(parent);
+			node.setPlayer();
+			if(node.setConfig(i)){
+				node.setScores();
+				parent.children.add(node);
+			}
+		}
 		return null;
 	}
 }
