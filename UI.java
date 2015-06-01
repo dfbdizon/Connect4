@@ -11,7 +11,7 @@ import javax.sound.sampled.*;
 public class UI extends JFrame {
     int start = 0;
     int playerNum = 2;
-    int r, c, turn = 0;
+    int turn = 2;
     boolean flag = false;
     String name = "";
     JFrame gameFrame;
@@ -50,6 +50,7 @@ public class UI extends JFrame {
     final Color bgColor;
      
     public void init(){
+        System.out.println("turn: " + turn);
         gameFrame = new JFrame();
         try {
             String btnHover = "./assets/button_column_hover.png";
@@ -213,7 +214,6 @@ public class UI extends JFrame {
      
     public void addToken(int col, int player) {
         JLabel tokenL = new JLabel();
-        
         /* If human player */
         if(turn == playerNum) tokenL.setIcon(playerToken);
         else tokenL.setIcon(aiToken);
@@ -229,10 +229,10 @@ public class UI extends JFrame {
             gameFrame.add(tokenL);
             gameFrame.repaint();
 
-            gameLogic.addPiece(col, occupiedRow, player);
-            if(turn == 1) turn = 2;
-            else turn = 1;
+            turn = gameLogic.addPiece(col, occupiedRow, player);
         }
+        updateStatus(turn);
+        if(turn == 1) gameLogic.moveAI();
     }
     
     public int getOccupiedRow(int col){
