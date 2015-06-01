@@ -10,15 +10,54 @@ public class Connect4{
 	private final char PLAYER = '2';
 	private final char AI = '1';
 
-	Node root;
+	private static Node root;
 
 	public Connect4(){
 		initializeBoard();
 	}
 	public static void moveAI(){
-		int randomCol = rand.nextInt(7) + 1;
-		System.out.println("move: add to column " + randomCol);
-		gameUI.addToken(randomCol, 1);
+//<<<<<<< HEAD
+//		int randomCol = rand.nextInt(7) + 1;
+//		System.out.println("move: add to column " + randomCol);
+//		gameUI.addToken(randomCol, 1);
+//=======
+		//dito ata tatawagin ung minimax
+		//so board lang meron dito
+		if(!isFirstMoveAI){
+			if(isFirstMoveOpp){ //base case na ito
+				isFirstMoveOpp = false;
+				root = new Node(null);
+				root.player = '2'; //si 2 ung huli kasing gumalaw
+				root.row = 1;
+				root.col = 4;
+				root.myMaterial = .1;
+				root.oppMaterial = .1;
+				root.score = 0;
+				root.config = (HashMap<Integer, String>)board.clone();
+			}
+			else{
+				updateRootOpp();
+			}
+			int randomCol = rand.nextInt(7) + 1;
+			int move = Connect4.MinMax();
+			col = move;
+			updateRootAI();
+			System.out.println("move: add to column " + randomCol);
+			gameUI.addToken(randomCol, 1);
+
+		}
+		else if(isFirstMoveAI){
+			firstMove();
+			isFirstMoveAI = false;
+			// root = new Node(null); //base case, assuming first player si AI lagi, and sya si 1
+			// root.player = '1';
+			// root.row = 1;
+			// root.col = 4;
+			// root.myMaterial = .1;
+			// root.oppMaterial = .1;
+		}
+
+//>>>>>>> 5401032a35273049d93b5ee50ed899e535cd373b
 	}
 	public static void firstMove(){
 		gameUI.addToken(4, 1);
@@ -531,7 +570,7 @@ public class Connect4{
 	}
 
 	
-//	private static int MinMax(int col, int row, char player) {
+ //	private static int MinMax(int col, int row, char player) {
 	/*
 	int MinMax(int col, int row, char player) {
 		Tree mainTree = new Tree();
@@ -605,7 +644,7 @@ public class Connect4{
 		return tree.children.indexOf(bestMove)+1;
 	}*/
 	
-	int MinMax(Node root){
+	private static int MinMax(){
 		root.setAlpha(Integer.MIN_VALUE);
 		root.setBeta(Integer.MAX_VALUE);
 		int retval = 0;
@@ -691,7 +730,28 @@ public class Connect4{
 		}
 		return retval;
 	}
-	
+
+	private static void updateRootAI(){
+		Node temp;
+		for(int i = 0; i < root.children.size(); i++){
+			temp = root.children.get(i);
+			if(temp.col == col){
+				root = temp;
+				break;
+			}
+		}
+	}
+
+	private static void updateRootOpp(){
+		Node temp; 
+		for(int i = 0; i < root.children.size(); i++){
+			temp = root.children.get(i);
+			if(temp.col == col){
+				root = temp;
+				break;
+			}
+		}	
+	}
 	private ArrayList<Node> expand(Node root) {
 		//root.
 		return null;
