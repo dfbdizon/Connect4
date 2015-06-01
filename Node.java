@@ -7,8 +7,7 @@ class Node{
 	ArrayList<Node> children = new ArrayList<Node>();
 	char player; //kung sinong nagplay ng move na yon
 	Node parent;
-	int row, col, alpha, beta;
-	
+	int row, col;
 	// public Node(HashMap<Integer, String> newConfig, double newScore, char player){
 	// 	config = newConfig;
 	// 	score = newScore;
@@ -25,8 +24,8 @@ class Node{
 	public double getScore(){
 		return score;
 	}
-	public void setAlpha(int alpha){
-		this.alpha = alpha;
+	public void setAlpha(double alpha2){
+		this.alpha = alpha2;
 	}
 	public void setBeta(double beta){
 		this.beta = beta;
