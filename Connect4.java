@@ -621,6 +621,7 @@ public class Connect4{
 		currNode = children.get(0);
 		double score = 0;
 		while(!rootNode.equals(root)||children.indexOf(currNode.parent)+1<=children.size()-1){//habang di pa bumabalik sa root or habang less than the number of possible children palang ang naeexplore
+			children = rootNode.children;
 			for(int i = 0; i <= 6; i++){//loop on all children of firstChild
 				currNode = children.get(i);
 				score = currNode.getScore();
@@ -629,16 +630,34 @@ public class Connect4{
 				else
 					rootNode.setAlpha(Math.max(rootNode.alpha, score));
 				if(currNode.alpha>=currNode.beta){
-					rootNode = (currNode.parent).parent;
-					currNode.parent.value = currNode.alpha;
-					children = rootNode.children;
-					i = 0;
+//					rootNode = (currNode.parent).parent;
+//					currNode.parent.value = currNode.value;
+//					children = rootNode.children;
+					break;
 				}
 			}
-			rootNode = (currNode.parent).parent;
-			currNode.parent.value = currNode.alpha;
+			if(rootNode.player==PLAYER)
+				rootNode.value = rootNode.beta;
+			else
+				rootNode.parent.value = rootNode.parent.alpha;
+			rootNode = (rootNode).parent;
 			children = rootNode.children;
-			currNode = children.get(children.indexOf(currNode.parent)+1);
+			if(rootNode.player==AI)
+				rootNode.setAlpha(Math.max(currNode.parent.value, rootNode.alpha));
+			else
+				rootNode.setBeta(Math.min(currNode.parent.alpha, rootNode.beta));
+			
+			if(children.size()-1>=children.indexOf(currNode.parent)+1){
+				rootNode = children.get(children.indexOf(currNode.parent)+1); //go to next kapatid
+				rootNode.setAlpha(rootNode.parent.alpha);
+				rootNode.setBeta(rootNode.parent.beta);
+			}else{
+				if(rootNode.player==PLAYER)
+					rootNode.value = rootNode.beta;
+				else
+					rootNode.value = rootNode.alpha;
+				rootNode = (currNode.parent).parent.parent;
+			}
 		}
 		return currNode.alpha;
 	}
