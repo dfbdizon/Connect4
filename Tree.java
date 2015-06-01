@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 class Tree{
-	ArrayList<Node> children = new ArrayList<Node>();
 	Node root;
 	String minOrMax;
+	ArrayList<Node> children = new ArrayList<Node>();
 	public void setRootNode(Node node){
 		root = node;
 	}

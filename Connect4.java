@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -10,10 +11,10 @@ public class Connect4{
 	public Connect4(){
 		initializeBoard();
 	}
-	public static void moveAI(){
+	public static void moveAI(int player){
 		int randomCol = rand.nextInt(7) + 1;
-		System.out.println("move: add to column " + randomCol);
-		gameUI.addToken(randomCol, 1);
+		//System.out.println("move: add to column " + randomCol);
+		gameUI.addToken(randomCol, player);
 	}
 	public static void firstMove(){
 		gameUI.addToken(4, 1);
@@ -40,9 +41,18 @@ public class Connect4{
 			if(player == 1) return 4;
 			else return 3;
 		}
-		//else if (Check if draw)
+		else if(isDraw()){
+			return 5;
+		}
 		if(player == 1) return 2;
 		else return 1;
+	}
+
+	private static boolean isDraw(){
+		for(int i = 1; i <= 7; i++){
+			if(board.get(i).indexOf("0") != -1) return false;
+		}
+		return true;
 	}
 
 	@SuppressWarnings("unused")
@@ -139,7 +149,7 @@ public class Connect4{
 	}
 
 	public void setUI(UI gameUI){
-		System.out.println("set ui");
+		//System.out.println("set ui");
 		this.gameUI = gameUI;
 		try{
 			Thread.sleep(1000);
@@ -167,12 +177,12 @@ public class Connect4{
 		double retDouble = myMaterial - oppMaterial;
 		return retDouble;
 	}
-
-	private static double updateMaterial(char player, int row, int col, double prevMaterial){
+/*
+	protected static double updateMaterial(char player, int row, int col, double prevMaterial){
 		double retDouble = prevMaterial;
 		retDouble += checkHowManyInARow(player, row, col);
 		return retDouble;
-	}
+	}*/
 	//do I count ung rows na wala naman na pagasa makabuo pa ng 4? this implementation, NO
 	//cinocount ko rin ung doubles, IE 1 in a row sya, pero pwede ring 2 in a row pala etc DUPLICATES, which makes sense since higher chances of winning naman talaga if maraming possible successes sa move na un
 
@@ -528,22 +538,22 @@ public class Connect4{
 	}
 
 
-	
-	private static int MinMax(int col, int row, char player) {
+	/*
+	int MinMax(int col, int row, char player) {
 		Tree mainTree = new Tree();
 		mainTree.setRootNode(new Node(board, 0));
-		Node root = mainTree.getRoot();
-		mainTree.addChild(new Node(root.move(1), olibya));
-		mainTree.addChild(new Node(root.move(2), olibya));
-		mainTree.addChild(new Node(root.move(3), olibya));
-		mainTree.addChild(new Node(root.move(4), olibya));
-		mainTree.addChild(new Node(root.move(5), olibya));
-		mainTree.addChild(new Node(root.move(6), olibya));
-		mainTree.addChild(new Node(root.move(7), olibya));
+		Node root = mainTree.returnRoot();
+		mainTree.addChild(new Node(root.move(1), getStateScores));
+		mainTree.addChild(new Node(root.move(2), getStateScores));
+		mainTree.addChild(new Node(root.move(3), getStateScores));
+		mainTree.addChild(new Node(root.move(4), getStateScores));
+		mainTree.addChild(new Node(root.move(5), getStateScores));
+		mainTree.addChild(new Node(root.move(6), getStateScores));
+		mainTree.addChild(new Node(root.move(7), getStateScores));
 		return MaxMove (col, row, player, mainTree);
 	}
 	 
-	/*int MinMaxIterative(int col, int row, char player){
+	int MinMaxIterative(int col, int row, char player){
 		boolean isMax = true;
 		while(!hasWinner(col, row, player)){
 			if(isMax){
@@ -554,9 +564,10 @@ public class Connect4{
 				isMax=!isMax;
 			}
 		}
+
 	}*/
-	
-	private static int MaxMove(int col, int row, char player, Tree tree) {
+	/*
+	int MaxMove(int col, int row, char player, Tree tree) {
 		if (hasWinner(col, row, player)) {
 			return 9;//EvalGameState(config);
 		}
@@ -565,15 +576,15 @@ public class Connect4{
 			Node currMove = tree.getChild(1);
 			Node root = currMove;
 			Tree currTree = new Tree();
-			currTree.addChild(new Node(root.move(1), olibya));
-			currTree.addChild(new Node(root.move(2), olibya));
-			currTree.addChild(new Node(root.move(3), olibya));
-			currTree.addChild(new Node(root.move(4), olibya));
-			currTree.addChild(new Node(root.move(5), olibya));
-			currTree.addChild(new Node(root.move(6), olibya));
-			currTree.addChild(new Node(root.move(7), olibya));
+			currTree.addChild(new Node(root.move(1), getStateScores));
+			currTree.addChild(new Node(root.move(2), getStateScores));
+			currTree.addChild(new Node(root.move(3), getStateScores));
+			currTree.addChild(new Node(root.move(4), getStateScores));
+			currTree.addChild(new Node(root.move(5), getStateScores));
+			currTree.addChild(new Node(root.move(6), getStateScores));
+			currTree.addChild(new Node(root.move(7), getStateScores));
 			for(int i = 0; i <= tree.children.size()-1; i++) {//iterate on each move
-				if (olibya('2', row, tree.children.indexOf(MinMove(col, row, '2', currTree))) > olibya('2', row, tree.children.indexOf(bestMove))) 
+				if (getStateScores('2', row, tree.children.indexOf(MinMove(col, row, '2', currTree))) > getStateScores('2', row, tree.children.indexOf(bestMove))) 
 					bestMove = currMove;
 			}
 			return tree.children.indexOf(bestMove)+1;
@@ -585,17 +596,34 @@ public class Connect4{
 		Node currMove = tree.getChild(0);//initialize best move
 		Node root = currMove;
 		Tree currTree = new Tree();
-		currTree.addChild(new Node(root.move(1), olibya));
-		currTree.addChild(new Node(root.move(2), olibya));
-		currTree.addChild(new Node(root.move(3), olibya));
-		currTree.addChild(new Node(root.move(4), olibya));
-		currTree.addChild(new Node(root.move(5), olibya));
-		currTree.addChild(new Node(root.move(6), olibya));
-		currTree.addChild(new Node(root.move(7), olibya));
+		currTree.addChild(new Node(root.move(1), getStateScores));
+		currTree.addChild(new Node(root.move(2), getStateScores));
+		currTree.addChild(new Node(root.move(3), getStateScores));
+		currTree.addChild(new Node(root.move(4), getStateScores));
+		currTree.addChild(new Node(root.move(5), getStateScores));
+		currTree.addChild(new Node(root.move(6), getStateScores));
+		currTree.addChild(new Node(root.move(7), getStateScores));
 		for(int i = 0; i <= tree.children.size()-1; i++) {//iterate on all moves
-			if (olibya('2', row, tree.children.indexOf(MaxMove(col, row, '1', currTree))) > olibya('2', row, tree.children.indexOf(bestMove))) 
+			if (getStateScores('2', row, tree.children.indexOf(MaxMove(col, row, '1', currTree))) > getStateScores('2', row, tree.children.indexOf(bestMove))) 
 				bestMove = currMove;
 		}
 		return tree.children.indexOf(bestMove)+1;
+	}*/
+	
+	int MinMax(Node root){
+		int alpha = Integer.MIN_VALUE, beta = Integer.MAX_VALUE;//Step 1
+		ArrayList<Node> children = expand(root);
+		for(int i = 0;  i <= 9; i++){
+			Node firstChild = children.get(i);
+			children = expand(firstChild);
+		}
+		
+		
+		return 0;
+	}
+	
+	private ArrayList<Node> expand(Node root) {
+		//root.
+		return null;
 	}
 }

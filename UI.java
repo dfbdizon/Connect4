@@ -46,11 +46,12 @@ public class UI extends JFrame {
 
     HashMap<Integer, String> config;
     static Connect4 gameLogic;
+    Main main;
      
     final Color bgColor;
      
     public void init(){
-        System.out.println("turn: " + turn);
+        //System.out.println("turn: " + turn);
         gameFrame = new JFrame();
         try {
             String btnHover = "./assets/button_column_hover.png";
@@ -118,43 +119,43 @@ public class UI extends JFrame {
 
         col1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                System.out.println("Add token on col1");
+                //System.out.println("Add token on col1");
                 if(turn == playerNum) addToken(1, 2);
             }
         });          
         col2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                System.out.println("Add token on col2");
+                //System.out.println("Add token on col2");
                 if(turn == playerNum) addToken(2, 2);
             }
         });          
         col3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                System.out.println("Add token on col3");
+                //System.out.println("Add token on col3");
                 if(turn == playerNum) addToken(3, 2);
             }
         });          
         col4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                System.out.println("Add token on col4");
+                //System.out.println("Add token on col4");
                 if(turn == playerNum) addToken(4, 2);
             }
         });          
         col5.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                System.out.println("Add token on col5");
+                //System.out.println("Add token on col5");
                 if(turn == playerNum) addToken(5, 2);
             }
         });          
         col6.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                System.out.println("Add token on col6");
+                //System.out.println("Add token on col6");
                 if(turn == playerNum) addToken(6, 2);
             }
         });          
         col7.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                System.out.println("Add token on col7");
+                //System.out.println("Add token on col7");
                 if(turn == playerNum) addToken(7, 2);
             }
         });
@@ -165,6 +166,7 @@ public class UI extends JFrame {
         this.name = name;
         this.config = config; 
         this.gameLogic = gameLogic;
+        this.main = main;
 
         gameFrame.setTitle("Connect4");
         gameFrame.setSize(900, 575);
@@ -232,7 +234,8 @@ public class UI extends JFrame {
             turn = gameLogic.addPiece(col, occupiedRow, player);
         }
         updateStatus(turn);
-        if(turn == 1) gameLogic.moveAI();
+        if(turn == 1) gameLogic.moveAI(1);
+        else gameLogic.moveAI(2);
     }
     
     public int getOccupiedRow(int col){
@@ -258,18 +261,22 @@ public class UI extends JFrame {
             stat.setFont(new Font("Serif", Font.PLAIN, 40));
             Dimension stSize = stat.getPreferredSize();
             stat.setBounds(25, 250, stSize.width, stSize.height);
+            //Main.playAgain(2);
+
         }
         else if(turn == 4){
             stat.setText("You Lose.");
             stat.setFont(new Font("Serif", Font.PLAIN, 40));
             Dimension stSize = stat.getPreferredSize();
             stat.setBounds(25, 250, stSize.width, stSize.height);
+            //Main.playAgain(1);
         }
         else if(turn == 5){
             stat.setText("Draw");
             stat.setFont(new Font("Serif", Font.PLAIN, 40));
             Dimension stSize = stat.getPreferredSize();
             stat.setBounds(25, 250, stSize.width, stSize.height);
+            //Main.playAgain(3);
         }
         else if(playerNum == turn) {
             stat.setText("Your Turn");
@@ -287,7 +294,7 @@ public class UI extends JFrame {
         statPanel.add(stat, JLayeredPane.MODAL_LAYER);
         gameFrame.add(statPanel);
         gameFrame.repaint();
-        System.out.println("stat updated");
+        //System.out.println("stat updated");
     }
 
     public void playerWins(){
