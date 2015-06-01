@@ -164,7 +164,7 @@ public class Connect4{
 	//Dapat may magssave ng stateScores ni player 1 and 2 doon sa currentState
 
 	// sa tree, computation ng statescore ay iincrement lang from parent, in favor of AI agent pa rin 
-	protected static double getStateScore(double myMaterial, double oppMaterial){
+	public static double getStateScore(double myMaterial, double oppMaterial){
 		double retDouble = myMaterial - oppMaterial;
 		return retDouble;
 	}
@@ -620,21 +620,25 @@ public class Connect4{
 		rootNode = firstChild;
 		currNode = children.get(0);
 		double score = 0;
-		while(!currNode.equals(root)){
+		while(!rootNode.equals(root)||children.indexOf(currNode.parent)+1<=children.size()-1){//habang di pa bumabalik sa root or habang less than the number of possible children palang ang naeexplore
 			for(int i = 0; i <= 6; i++){//loop on all children of firstChild
 				currNode = children.get(i);
 				score = currNode.getScore();
-				if(currNode.player==PLAYER)//Kapag player ibig sabihin nagmiminimize ka
-					currNode.setBeta(Math.min(currNode.beta, score));
+				if(currNode.player==AI)//Kapag player ibig sabihin nagmiminimize ka
+					rootNode.setBeta(Math.min(rootNode.beta, score));
 				else
-					currNode.setAlpha(Math.max(currNode.alpha, score));
+					rootNode.setAlpha(Math.max(rootNode.alpha, score));
 				if(currNode.alpha>=currNode.beta){
 					rootNode = (currNode.parent).parent;
-			//		currNode.root.value = currNode.alpha;
+					currNode.parent.value = currNode.alpha;
 					children = rootNode.children;
 					i = 0;
 				}
 			}
+			rootNode = (currNode.parent).parent;
+			currNode.parent.value = currNode.alpha;
+			children = rootNode.children;
+			currNode = children.get(children.indexOf(currNode.parent)+1);
 		}
 		return currNode.alpha;
 	}
