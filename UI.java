@@ -234,8 +234,9 @@ public class UI extends JFrame {
             turn = gameLogic.addPiece(col, occupiedRow, player);
         }
         updateStatus(turn);
-        if(turn == 1) gameLogic.moveAI(1);
-        else gameLogic.moveAI(2);
+        if(turn == 1) gameLogic.moveAI();
+        //if(turn == 1) gameLogic.moveAI(1);
+        //else gameLogic.moveAI(2);
     }
     
     public int getOccupiedRow(int col){
