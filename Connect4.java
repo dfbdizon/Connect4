@@ -1,29 +1,48 @@
 import java.util.HashMap;
+import java.util.Random;
 
 public class Connect4{
 	private static HashMap<Integer, String> board = new HashMap<Integer, String>(7);
 	private static boolean endGame = false;
 	private static UI gameUI;
+	private static Random rand = new Random();
 
 	public Connect4(){
 		initializeBoard();
 	}
-	public static void addPiece(int column, int row, int player){
+	public static void moveAI(){
+		int randomCol = rand.nextInt(7) + 1;
+		System.out.println("move: add to column " + randomCol);
+		gameUI.addToken(randomCol, 1);
+	}
+	public static void firstMove(){
+		gameUI.addToken(4, 1);
+	}
+	public static int addPiece(int column, int row, int player){
 		String currentCol = board.get(column);
 		String newCol;
 		char token;
-		if(player == 1) token = '1';
-		else token = '2'; 
+		String tokenString;
+		if(player == 1){
+			tokenString = "1";
+			token = '1';
+		}
+		else{
+			tokenString = "2";
+			token = '2';
+		} 
 
-		newCol = currentCol.substring(0, row) + token;
-		for(int i = row+1; i < 6; i++) newCol += '0'; 
-
+		newCol = currentCol.replaceFirst("0", tokenString);
+		board.put(column, newCol);
 		if(hasWinner(column, row, token)){
+			System.out.println("winner player " + player);
 			endGame = true;
-			if(player == 1) gameUI.updateStatus(4);
-			else gameUI.updateStatus(3);
+			if(player == 1) return 4;
+			else return 3;
 		}
 		//else if (Check if draw)
+		if(player == 1) return 2;
+		else return 1;
 	}
 
 	@SuppressWarnings("unused")
@@ -120,7 +139,14 @@ public class Connect4{
 	}
 
 	public void setUI(UI gameUI){
+		System.out.println("set ui");
 		this.gameUI = gameUI;
+		try{
+			Thread.sleep(1000);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		firstMove();
 	}
 	// Heuristic 1?
 	// Count number of possible 4 in a rows that each player can still make in the current state
@@ -529,6 +555,7 @@ public class Connect4{
 			}
 		}
 	}*/
+	
 	int MaxMove(int col, int row, char player, Tree tree) {
 		if (hasWinner(col, row, player)) {
 			return 9;//EvalGameState(config);
