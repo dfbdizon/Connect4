@@ -3,11 +3,11 @@ import java.util.HashMap;
 
 class Node{
 	HashMap<Integer, String> config;
-	double score, myMaterial, oppMaterial;
+	double score, myMaterial, oppMaterial, alpha, beta, value;
 	ArrayList<Node> children = new ArrayList<Node>();
 	char player; //kung sinong nagplay ng move na yon
-	Node root, parent;
-	int row, col, alpha, beta;
+	Node root;
+	int row, col;
 	
 	public Node(HashMap<Integer, String> newConfig, double newScore){
 		config = newConfig;
@@ -22,14 +22,11 @@ class Node{
 	public void setRoot(Node root){
 		this.root = root;
 	}
-	public void setAlpha(int alpha){
+	public void setAlpha(double alpha){
 		this.alpha = alpha;
 	}
-	public void setBeta(int beta){
+	public void setBeta(double beta){
 		this.beta = beta;
-	}
-	public Node getParent(){
-		return this.parent;
 	}
 	public void addChild(Node node){
 		if(player=='1')

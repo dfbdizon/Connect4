@@ -7,7 +7,8 @@ public class Connect4{
 	private static boolean endGame = false;
 	private static UI gameUI;
 	private static Random rand = new Random();
-
+	private final char PLAYER = '2';
+	private final char AI = '1';
 	public Connect4(){
 		initializeBoard();
 	}
@@ -601,23 +602,39 @@ public class Connect4{
 		return tree.children.indexOf(bestMove)+1;
 	}*/
 	
-	int MinMax(Node root){
+	double MinMax(Node root){
 		root.setRoot(root);
 		root.setAlpha(Integer.MIN_VALUE);
 		root.setBeta(Integer.MAX_VALUE);
 		//int alpha = Integer.MIN_VALUE, beta = Integer.MAX_VALUE;//Step 1
 		ArrayList<Node> children = expand(root);
+		Node firstChild = children.get(0), currNode = firstChild, rootNode;
 		for(int i = 0;  i <= 9; i++){
-			Node firstChild = children.get(i);
+			firstChild = children.get(i);
 			firstChild.setAlpha(root.alpha);
 			firstChild.setBeta(root.beta);
 			children = expand(firstChild);
 		}
-		int score = getStateScore(firstChild);
-		//if()
-		
-		
-		return 0;
+		rootNode = firstChild;
+		currNode = children.get(0);
+		double score = 0;
+		while(!currNode.equals(root)){
+			for(int i = 0; i <= 6; i++){//loop on all children of firstChild
+				currNode = children.get(i);
+				score = currNode.getScore();
+				if(currNode.player==PLAYER)//Kapag player ibig sabihin nagmiminimize ka
+					currNode.setBeta(Math.min(currNode.beta, score));
+				else
+					currNode.setAlpha(Math.max(currNode.alpha, score));
+				if(currNode.alpha>=currNode.beta){
+					rootNode = (currNode.root).root;
+			//		currNode.root.value = currNode.alpha;
+					children = rootNode.children;
+					i = 0;
+				}
+			}
+		}
+		return currNode.alpha;
 	}
 	
 	private ArrayList<Node> expand(Node root) {
