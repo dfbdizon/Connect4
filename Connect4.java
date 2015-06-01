@@ -624,11 +624,11 @@ public class Connect4{
 		ArrayList<Node> children = root.children;
 		Node bestMove = children.get(0);
 		Node currMove = children.get(1);//initialize best move
-		Node root2 = currMove;
 		for(int i = 0; i <= children.size()-1; i++) {//iterate on all moves
 			beta=Math.min(beta, bestMove.score);
 			depth = depth+1;
-			if (MaxMove(currMove, depth++, alpha, beta).score > (bestMove).score) 
+			currMove=children.get(i);
+			if (MaxMove(currMove, depth, alpha, beta).score > (bestMove).score) 
 				bestMove = currMove;
 			//beta=Math.min(beta, bestMove.score);
 		}
@@ -792,6 +792,7 @@ public class Connect4{
 				node.setScores();
 				parent.children.add(node);
 			}
+			System.out.println("i: " + i);
 		}
 		return null;
 	}
