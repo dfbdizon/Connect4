@@ -3,6 +3,7 @@ import java.util.ArrayList;
 class Tree{
 	ArrayList<Node> children = new ArrayList<Node>();
 	Node root;
+	String minOrMax;
 	public void setRootNode(Node node){
 		root = node;
 	}
@@ -12,7 +13,7 @@ class Tree{
 	public void removeChild(int index){
 		children.remove(index);
 	}
-	public Node returnRoot(){
+	public Node getRoot(){
 		return root;
 	}
 	public ArrayList<Node> getChildren(){

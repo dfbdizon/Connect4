@@ -529,10 +529,10 @@ public class Connect4{
 
 
 	
-	int MinMax(int col, int row, char player) {
+	private static int MinMax(int col, int row, char player) {
 		Tree mainTree = new Tree();
 		mainTree.setRootNode(new Node(board, 0));
-		Node root = mainTree.returnRoot();
+		Node root = mainTree.getRoot();
 		mainTree.addChild(new Node(root.move(1), olibya));
 		mainTree.addChild(new Node(root.move(2), olibya));
 		mainTree.addChild(new Node(root.move(3), olibya));
@@ -556,7 +556,7 @@ public class Connect4{
 		}
 	}*/
 	
-	int MaxMove(int col, int row, char player, Tree tree) {
+	private static int MaxMove(int col, int row, char player, Tree tree) {
 		if (hasWinner(col, row, player)) {
 			return 9;//EvalGameState(config);
 		}
@@ -580,7 +580,7 @@ public class Connect4{
 		}
 	}
 	 
-	int MinMove(int col, int row, char player, Tree tree) {
+	private static int MinMove(int col, int row, char player, Tree tree) {
 		Node bestMove = tree.getChild(1);
 		Node currMove = tree.getChild(0);//initialize best move
 		Node root = currMove;
