@@ -7,8 +7,8 @@ public class Connect4{
 	private static boolean endGame = false;
 	private static UI gameUI;
 	private static Random rand = new Random();
-	private final char PLAYER = '2';
-	private final char AI = '1';
+	private final static char PLAYER = '2';
+	private final static char AI = '1';
 
 	private static Node root;
 
@@ -752,7 +752,7 @@ public class Connect4{
 			}
 		}	
 	}
-	private ArrayList<Node> expand(Node root) {
+	private static ArrayList<Node> expand(Node root) {
 		//root.
 		return null;
 	}
