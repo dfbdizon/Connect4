@@ -211,7 +211,7 @@ public class Connect4{
 
 	protected static double updateMaterial(char player, int row, int col, double prevMaterial, HashMap<Integer, String> board){
 		double retDouble = prevMaterial;
-		retDouble += checkHowManyInARow(player, row, col, HashMap<Integer, String> board);
+		retDouble += checkHowManyInARow(player, row, col, board);
 		return retDouble;
 	}
 	//do I count ung rows na wala naman na pagasa makabuo pa ng 4? this implementation, NO
@@ -644,7 +644,7 @@ public class Connect4{
 		int index = 0;
 		//System.out.println()
 		Node firstChild = children.get(0), currNode = firstChild, rootNode;
-		for(int i = 0;  i <= 3; i++){
+		for(int i = 0;  i < children.size(); i++){
 			firstChild = children.get(i);
 			firstChild.setAlpha(root.alpha);
 			firstChild.setBeta(root.beta);
