@@ -7,20 +7,21 @@ public class Connect4{
 	private static boolean endGame = false;
 	private static UI gameUI;
 	private static Random rand = new Random();
+	private static int col;
 	private final static char PLAYER = '2';
 	private final static char AI = '1';
 
 	private static Node root;
 
+	private static boolean isFirstMoveAI = true;
+	private static boolean isFirstMoveOpp = true;
+
 	public Connect4(){
 		initializeBoard();
 	}
+
 	public static void moveAI(){
-//<<<<<<< HEAD
-//		int randomCol = rand.nextInt(7) + 1;
-//		System.out.println("move: add to column " + randomCol);
-//		gameUI.addToken(randomCol, 1);
-//=======
+
 		//dito ata tatawagin ung minimax
 		//so board lang meron dito
 		if(!isFirstMoveAI){
@@ -57,12 +58,12 @@ public class Connect4{
 			// root.oppMaterial = .1;
 		}
 
-//>>>>>>> 5401032a35273049d93b5ee50ed899e535cd373b
 	}
 	public static void firstMove(){
 		gameUI.addToken(4, 1);
 	}
 	public static int addPiece(int column, int row, int player){
+		if(player == 2) col = column;
 		String currentCol = board.get(column);
 		String newCol;
 		char token;
@@ -756,8 +757,15 @@ public class Connect4{
 			}
 		}	
 	}
-	private static ArrayList<Node> expand(Node root) {
-		//root.
+	private static ArrayList<Node> expand(Node parent) {
+		for(int i = 1; i < 8; i++){
+			Node node = new Node(parent);
+			node.setPlayer();
+			if(node.setConfig(i)){
+				node.setScores();
+				parent.children.add(node);
+			}
+		}
 		return null;
 	}
 }

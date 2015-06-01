@@ -42,16 +42,22 @@ class Node{
 			this.player = '1'; //ibig sabihin, si 1 ung gumalaw
 		}
 	}
-	public void setConfig(int col){
+	public boolean setConfig(int col){
 		HashMap<Integer, String> moved = (HashMap<Integer, String>) parent.config.clone();
 		String currConfig = moved.get(col);
+		boolean retVal = true;
 		System.out.println("before: " + currConfig);
-		currConfig = currConfig.replaceFirst("0", ""+ this.player);
-		this.row = currConfig.lastIndexOf(this.player);
-		this.col = col;
-		System.out.println("after: " + currConfig);
-		moved.replace(col, currConfig);
-		this.config = moved;
+		if(currConfig.lastIndexOf(this.player) < 5){
+			currConfig = currConfig.replaceFirst("0", ""+ this.player);
+			this.row = currConfig.lastIndexOf(this.player);
+			this.col = col;
+			System.out.println("after: " + currConfig);
+			moved.replace(col, currConfig);
+			this.config = moved;
+		}
+		else{
+			retVal = false; //ibig sabihin puno na
+		}
 	}
 	public void setScores(){	
 		if(player == '1'){ //si 1 ung gumalaw
