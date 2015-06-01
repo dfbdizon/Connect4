@@ -160,9 +160,7 @@ public class Connect4{
 	//Dapat may magssave ng stateScores ni player 1 and 2 doon sa currentState
 
 	// sa tree, computation ng statescore ay iincrement lang from parent, in favor of AI agent pa rin 
-	private static double getStateScore(char player, int row, int col, double myMaterial, double oppMaterial){
-		String currentColumn;
-		char currentPiece;
+	private static double getStateScore(double myMaterial, double oppMaterial){
 		double retDouble = myMaterial - oppMaterial;
 		return retDouble;
 	}
