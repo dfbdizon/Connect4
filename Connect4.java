@@ -211,7 +211,7 @@ public class Connect4{
 
 	protected static double updateMaterial(char player, int row, int col, double prevMaterial, HashMap<Integer, String> board){
 		double retDouble = prevMaterial;
-		retDouble += checkHowManyInARow(player, row, col);
+		retDouble += checkHowManyInARow(player, row, col, board);
 		return retDouble;
 	}
 	//do I count ung rows na wala naman na pagasa makabuo pa ng 4? this implementation, NO
@@ -219,40 +219,40 @@ public class Connect4{
 
 	//try: pag nag combi ie 2, + .2 - .1 since ung previous one in a row void na dahil 2 in a row na?, so if nag3, +.3 -.2
 	//so parang essentially + .1 lang -_- TRY 
-	private static double checkHowManyInARow(char player, int row, int col){
+	private static double checkHowManyInARow(char player, int row, int col, HashMap<Integer, String> board){
 		double retDouble = 0;
 
 		char left, right, up, down, upRight, upLeft, downRight, downLeft;
 		char left1, right1, up1, down1, upRight1, upLeft1, downRight1, downLeft1;
 		char left2, right2, up2, down2, upRight2, upLeft2, downRight2, downLeft2;
 		
-		left = getLeft(col, row);
-		right = getRight(col, row);
-		up = getUp(col, row);
-		down = getDown(col, row);
-		upRight = getUpRight(col, row);
-		upLeft = getUpLeft(col, row);
-		downRight = getDownRight(col, row);
-		downLeft = getDownLeft(col, row);
+		left = getLeft(col, row, board);
+		right = getRight(col, row, board);
+		up = getUp(col, row, board);
+		down = getDown(col, row, board);
+		upRight = getUpRight(col, row, board);
+		upLeft = getUpLeft(col, row, board);
+		downRight = getDownRight(col, row, board);
+		downLeft = getDownLeft(col, row, board);
 
 		//get left nung nasa taas
-		left1 = getLeft(col-1, row);
-		right1 = getRight(col+1, row);
-		up1 = getUp(col, row+1);
-		down1 = getDown(col, row-1);
-		upRight1 = getUpRight(col+1, row+1);
-		upLeft1 = getUpLeft(col-1, row+1);
-		downRight1 = getDownRight(col+1, row-1);
-		downLeft1 = getDownLeft(col-1, row-1);
+		left1 = getLeft(col-1, row, board);
+		right1 = getRight(col+1, row, board);
+		up1 = getUp(col, row+1, board);
+		down1 = getDown(col, row-1, board);
+		upRight1 = getUpRight(col+1, row+1, board);
+		upLeft1 = getUpLeft(col-1, row+1, board);
+		downRight1 = getDownRight(col+1, row-1, board);
+		downLeft1 = getDownLeft(col-1, row-1, board);
 
-		left2 = getLeft(col-2, row);
-		right2 = getRight(col+2, row);
-		up2 = getUp(col, row+2);
-		down2 = getDown(col, row-2);
-		upRight2 = getUpRight(col+2, row+2);
-		upLeft2 = getUpLeft(col-2, row+2);
-		downRight2 = getDownRight(col+2, row-2);
-		downLeft2 = getDownLeft(col-2, row-2);
+		left2 = getLeft(col-2, row, board);
+		right2 = getRight(col+2, row, board);
+		up2 = getUp(col, row+2, board);
+		down2 = getDown(col, row-2, board);
+		upRight2 = getUpRight(col+2, row+2, board);
+		upLeft2 = getUpLeft(col-2, row+2, board);
+		downRight2 = getDownRight(col+2, row-2, board);
+		downLeft2 = getDownLeft(col-2, row-2, board);
 
 		//HORIZONTAL
 		//check if open ung left
@@ -522,49 +522,49 @@ public class Connect4{
 
 	}
 
-	private static char getLeft(int col, int row){
+	private static char getLeft(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0'; //null
 		if(col != 1) retChar = board.get(col-1).charAt(row);
 		return retChar;
 	}
 
-	private static char getRight(int col, int row){
+	private static char getRight(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
 		if(col != 7) retChar = board.get(col+1).charAt(row);
 		return retChar;
 	}
 
-	private static char getUp(int col, int row){
+	private static char getUp(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
 		if(row != 5 ) retChar = board.get(col).charAt(row+1);
 		return retChar;
 	}
 
-	private static char getDown(int col, int row){
+	private static char getDown(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
 		if(row != 0) retChar = board.get(col).charAt(row-1);
 		return retChar;
 	}
 
-	private static char getUpLeft(int col, int row){
+	private static char getUpLeft(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
 		if(row != 5 && col != 1) retChar = board.get(col-1).charAt(row+1);
 		return retChar;
 	}
 
-	private static char getUpRight(int col, int row){
+	private static char getUpRight(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
 		if(row != 5 && col != 7) retChar = board.get(col+1).charAt(row+1);
 		return retChar;
 	}
 
-	private static char getDownLeft(int col, int row){
+	private static char getDownLeft(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
 		if(row != 0 && col != 1) retChar = board.get(col-1).charAt(row-1);
 		return retChar;
 	}
 
-	private static char getDownRight(int col, int row){
+	private static char getDownRight(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
 		if(row != 0 && col != 7) retChar = board.get(col+1).charAt(row-1);
 		return retChar;
