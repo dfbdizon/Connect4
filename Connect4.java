@@ -19,6 +19,12 @@ public class Connect4{
 	public Connect4(){
 		initializeBoard();
 	}
+	/*
+	public static void moveAI(int player){
+		int randomCol = rand.nextInt(7) + 1;
+		//System.out.println("move: add to column " + randomCol);
+		gameUI.addToken(randomCol, player);
+	}*/
 
 	public static void moveAI(){
 
@@ -57,7 +63,6 @@ public class Connect4{
 			// root.myMaterial = .1;
 			// root.oppMaterial = .1;
 		}
-
 	}
 	public static void firstMove(){
 		gameUI.addToken(4, 1);
@@ -85,9 +90,18 @@ public class Connect4{
 			if(player == 1) return 4;
 			else return 3;
 		}
-		//else if (Check if draw)
+		else if(isDraw()){
+			return 5;
+		}
 		if(player == 1) return 2;
 		else return 1;
+	}
+
+	private static boolean isDraw(){
+		for(int i = 1; i <= 7; i++){
+			if(board.get(i).indexOf("0") != -1) return false;
+		}
+		return true;
 	}
 
 	@SuppressWarnings("unused")
@@ -184,7 +198,7 @@ public class Connect4{
 	}
 
 	public void setUI(UI gameUI){
-		System.out.println("set ui");
+		//System.out.println("set ui");
 		this.gameUI = gameUI;
 		try{
 			Thread.sleep(1000);
@@ -598,17 +612,8 @@ public class Connect4{
 			ArrayList<Node> children = root.children;
 			Node bestMove = children.get(0);//initialize best move
 			Node currMove = children.get(1);
-			Node root = currMove;
-			Tree currTree = new Tree();
-			currTree.addChild(new Node(root.move(1), getStateScores));
-			currTree.addChild(new Node(root.move(2), getStateScores));
-			currTree.addChild(new Node(root.move(3), getStateScores));
-			currTree.addChild(new Node(root.move(4), getStateScores));
-			currTree.addChild(new Node(root.move(5), getStateScores));
-			currTree.addChild(new Node(root.move(6), getStateScores));
-			currTree.addChild(new Node(root.move(7), getStateScores));
-			for(int i = 0; i <= tree.children.size()-1; i++) {//iterate on each move
-				if (getStateScores('2', row, tree.children.indexOf(MinMove(col, row, '2', currTree))) > getStateScores('2', row, tree.children.indexOf(bestMove))) 
+			for(int i = 0; i <= children.size()-1; i++) {//iterate on each move
+				if (getStateScores('2', row, tree.children.indexOf(MinMove(currMove))) > getStateScores('2', row, tree.children.indexOf(bestMove))) 
 					bestMove = currMove;
 			}
 			return tree.children.indexOf(bestMove)+1;
@@ -639,24 +644,32 @@ public class Connect4{
 		root.setBeta(Integer.MAX_VALUE);
 		int retval = 0;
 		//int alpha = Integer.MIN_VALUE, beta = Integer.MAX_VALUE;//Step 1
-		ArrayList<Node> children = expand(root);
+		ArrayList<Node> children = new ArrayList<Node>();
+		expand(root);
 		children = root.children;
 		int index = 0;
-		//System.out.println()
+		System.out.println(children.size());
 		Node firstChild = children.get(0), currNode = firstChild, rootNode;
-		for(int i = 0;  i < children.size(); i++){
+
+		for(int i = 0;  i <= 3; i++){
+			System.out.println(i+"iiiii");
 			firstChild = children.get(i);
 			firstChild.setAlpha(root.alpha);
 			firstChild.setBeta(root.beta);
 			children = expand(firstChild);
+			children = firstChild.children;
 		}
 		rootNode = firstChild;
+		int loop = 0;
+		System.out.println("yyyy" + children.size());
 		currNode = children.get(0);
 		double score = 0;
 		//questionable ang seconde statement sa while loop
-		while(!rootNode.equals(root)||children.indexOf(rootNode.children.get(index))<=children.size()-1){//habang di pa bumabalik sa root or habang less than the number of possible children palang ang naeexplore
+		while(!rootNode.equals(root)&&loop!=6){//habang di pa bumabalik sa root or habang less than the number of possible children palang ang naeexplore
 			children = rootNode.children;
+			//System.out.println("running" + children.size());
 			for(int i = 0; i <= children.size()-1; i++){//loop on all children of firstChild
+				//System.out.println("heeeer");
 				currNode = children.get(i);
 				score = currNode.getScore();
 				if(rootNode.player==PLAYER)//Kapag player ibig sabihin nagmiminimize ka
@@ -670,6 +683,7 @@ public class Connect4{
 					break;
 				}
 			}
+			//System.out.println("running:/");
 			if(rootNode.player==PLAYER)
 				rootNode.value = rootNode.beta;
 			else
@@ -687,6 +701,7 @@ public class Connect4{
 				rootNode.setAlpha(rootNode.parent.alpha);
 				rootNode.setBeta(rootNode.parent.beta);
 			}else{
+				System.out.println("2");
 				if(rootNode.player==PLAYER)
 					rootNode.value = rootNode.beta;
 				else
@@ -710,6 +725,7 @@ public class Connect4{
 						firstChild.setAlpha(root.alpha);
 						firstChild.setBeta(root.beta);
 						children = expand(firstChild);
+						children = firstChild.children;
 					}
 					rootNode = firstChild;
 					currNode = children.get(0);		
@@ -723,6 +739,7 @@ public class Connect4{
 					return retval;
 				}
 			}
+			loop++;
 		}
 		return retval;
 	}
