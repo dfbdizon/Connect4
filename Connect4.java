@@ -46,7 +46,7 @@ public class Connect4{
 				updateRootOpp();
 			}
 			int randomCol = rand.nextInt(7) + 1;
-			int move = Connect4.tryMinMax();
+			int move = Connect4.tryMinMaxDepth4();
 			System.out.println("UGH " + move);
 			col = move;
 			updateRootAI();
@@ -640,7 +640,7 @@ public class Connect4{
 		return tree.children.indexOf(bestMove)+1;
 	}
 	*/
-	private static int tryMinMax(){
+	private static int tryMinMaxDepth4(){
 		expand(root); //1st level / root - 1st 
 		double alpha;
 		double beta;
@@ -656,9 +656,10 @@ public class Connect4{
 		for(int i = 0; i < root.children.size(); i++){ // root - 1st - 2nd
 			expand(root.children.get(i));
 			node1 = root.children.get(i);
+			System.out.println("Column: " + node1.col + " AI Score: " + node1.score);
 			for(int j = 0; j < node1.children.size(); j++){
-				expand(node1.children.get(i));
-				node2 = node1.children.get(i);
+				expand(node1.children.get(j));
+				node2 = node1.children.get(j);
 				for(int k = 0; k < node2.children.size(); k++){
 					leaf = node2.children.get(k);
 					if(leaf.value > max){
@@ -684,6 +685,88 @@ public class Connect4{
 
 
 	}
+
+
+	private static int tryMinMaxDepth7(){
+		expand(root); //1st level / root - 1st 
+		double alpha;
+		double beta;
+		Node node1;
+		Node node2; 
+		Node node3;
+		Node node4;
+		Node node5;
+		Node leaf;
+
+		int index = 1;
+		double min = Double.MAX_VALUE; 
+		double max = Double.MIN_VALUE;
+
+		for(int i = 0; i < root.children.size(); i++){ // root - 1st - 2nd
+			expand(root.children.get(i));
+			node1 = root.children.get(i);
+			for(int j = 0; j < node1.children.size(); j++){
+				expand(node1.children.get(j));
+				node2 = node1.children.get(j);
+				for(int k = 0; k < node2.children.size(); k++){
+					expand(node2.children.get(k));
+					node3 = node2.children.get(k);
+					for(int l = 0; l < node3.children.size(); l++){ // root - 1st - 2nd
+						expand(node3.children.get(l));
+						node4 = node3.children.get(l);
+						for(int m = 0; m < node4.children.size(); m++){
+							expand(node4.children.get(m));
+							node5 = node4.children.get(m);
+							for(int n = 0; n < node5.children.size(); n++){
+								leaf = node5.children.get(n);
+								if(leaf.value < min){
+									min = leaf.value;
+								} 
+							}
+							node5.value = min;
+							min = Double.MAX_VALUE;
+							if(node5.value > max){
+								max = node5.value;
+							}
+						}
+						node4.value = max;
+						max = Double.MIN_VALUE;	
+						if(node4.value < min){
+							min = node4.value;
+						}
+					}
+					node3.value = min;
+					min = Double.MAX_VALUE;
+					if(node3.value > max){
+						min = node3.value;
+					} 
+				}
+				node2.value = max;
+				max = Double.MIN_VALUE;
+				if(node2.value < min){
+					min = node2.value;
+				}
+			}	
+			node1.value = min;
+			min = Double.MAX_VALUE;
+			if(node1.value > max){
+				max = node1.value;
+				index = i;
+			}
+		}
+
+
+		//System.out.println(index);
+		return index;
+
+	//	return 1;
+
+
+	}
+
+
+
+
 
 	private static int MinMax(){
 		root.setAlpha(Integer.MIN_VALUE);
