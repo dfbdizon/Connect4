@@ -6,8 +6,8 @@ class Node{
 	double score, myMaterial, oppMaterial;
 	ArrayList<Node> children = new ArrayList<Node>();
 	char player; //kung sinong nagplay ng move na yon
-	Node root;
-	int row, col;
+	Node root, parent;
+	int row, col, alpha, beta;
 	
 	public Node(HashMap<Integer, String> newConfig, double newScore){
 		config = newConfig;
@@ -21,6 +21,15 @@ class Node{
 	}
 	public void setRoot(Node root){
 		this.root = root;
+	}
+	public void setAlpha(int alpha){
+		this.alpha = alpha;
+	}
+	public void setBeta(int beta){
+		this.beta = beta;
+	}
+	public Node getParent(){
+		return this.parent;
 	}
 	public void addChild(Node node){
 		if(player=='1')

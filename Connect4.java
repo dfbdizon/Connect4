@@ -602,12 +602,19 @@ public class Connect4{
 	}*/
 	
 	int MinMax(Node root){
-		int alpha = Integer.MIN_VALUE, beta = Integer.MAX_VALUE;//Step 1
+		root.setRoot(root);
+		root.setAlpha(Integer.MIN_VALUE);
+		root.setBeta(Integer.MAX_VALUE);
+		//int alpha = Integer.MIN_VALUE, beta = Integer.MAX_VALUE;//Step 1
 		ArrayList<Node> children = expand(root);
 		for(int i = 0;  i <= 9; i++){
 			Node firstChild = children.get(i);
+			firstChild.setAlpha(root.alpha);
+			firstChild.setBeta(root.beta);
 			children = expand(firstChild);
 		}
+		int score = getStateScore(firstChild);
+		//if()
 		
 		
 		return 0;
