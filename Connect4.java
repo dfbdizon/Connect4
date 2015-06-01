@@ -525,7 +525,7 @@ public class Connect4{
 
 	private static char getLeft(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0'; //null
-		if(col > 2) retChar = board.get(col-1).charAt(row);
+		if(col > 1) retChar = board.get(col-1).charAt(row);
 		return retChar;
 	}
 
