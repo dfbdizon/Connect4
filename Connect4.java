@@ -46,7 +46,8 @@ public class Connect4{
 				updateRootOpp();
 			}
 			int randomCol = rand.nextInt(7) + 1;
-			int move = Connect4.MinMax();
+			int move = Connect4.tryMinMax();
+			System.out.println("UGH " + move);
 			col = move;
 			updateRootAI();
 			System.out.println("move: add to column " + randomCol);
@@ -639,10 +640,55 @@ public class Connect4{
 		return tree.children.indexOf(bestMove)+1;
 	}
 	*/
+	private static int tryMinMax(){
+		expand(root); //1st level / root - 1st 
+		double alpha;
+		double beta;
+		int depth = 4;
+		Node node1;
+		Node node2; 
+		Node leaf;
+
+		int index = 1;
+		double min = 0; 
+		double max = 0;
+
+		for(int i = 0; i < root.children.size(); i++){ // root - 1st - 2nd
+			expand(root.children.get(i));
+			node1 = root.children.get(i);
+			for(int j = 0; j < node1.children.size(); j++){
+				expand(node1.children.get(i));
+				node2 = node1.children.get(i);
+				for(int k = 0; k < node2.children.size(); k++){
+					leaf = node2.children.get(k);
+					if(leaf.value > max){
+						max = leaf.value;
+					} 
+				}
+				node2.value = max;
+				max = 0;
+				if(node2.value < min){
+					min = node2.value;
+				}
+			}	
+			if(node1.value > max){
+				max = node1.value;
+				index = i;
+			}
+		}
+
+		System.out.println(index);
+		return index;
+
+	//	return 1;
+
+
+	}
+
 	private static int MinMax(){
 		root.setAlpha(Integer.MIN_VALUE);
 		root.setBeta(Integer.MAX_VALUE);
-		int retval = 0;
+		int retval = 1;
 		//int alpha = Integer.MIN_VALUE, beta = Integer.MAX_VALUE;//Step 1
 		ArrayList<Node> children = new ArrayList<Node>();
 		expand(root);
@@ -766,6 +812,7 @@ public class Connect4{
 		}	
 	}
 	private static ArrayList<Node> expand(Node parent) {
+		parent.children.clear();
 		for(int i = 1; i < 8; i++){
 			Node node = new Node(parent);
 			node.setPlayer();
