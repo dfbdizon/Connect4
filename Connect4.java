@@ -6,9 +6,11 @@ public class Connect4{
 	private static boolean endGame = false;
 	private static UI gameUI;
 	private static Random rand = new Random();
+	private static Tree currTree;
 
 	public Connect4(){
 		initializeBoard();
+		intiializeTree();
 	}
 	public static void moveAI(){
 		int randomCol = rand.nextInt(7) + 1;
@@ -166,7 +168,7 @@ public class Connect4{
 		return retDouble;
 	}
 
-	private static double updateMaterial(char player, int row, int col, double prevMaterial){
+	protected static double updateMaterial(char player, int row, int col, double prevMaterial, HashMapM<String,  ){
 		double retDouble = prevMaterial;
 		retDouble += checkHowManyInARow(player, row, col);
 		return retDouble;
@@ -527,9 +529,15 @@ public class Connect4{
 		return retChar;
 	}
 
+	private static void sinitializeTree(){
+		currTree = new Tree();
+		currTree.setRootNode(new Node(board, 0));
+		Node root = currTree.returnRoot();
 
+
+	}
 	
-	int MinMax(int col, int row, char player) {
+	private static int MinMax(int col, int row, char player) {
 		Tree mainTree = new Tree();
 		mainTree.setRootNode(new Node(board, 0));
 		Node root = mainTree.returnRoot();
@@ -556,7 +564,7 @@ public class Connect4{
 		}
 	}*/
 	
-	int MaxMove(int col, int row, char player, Tree tree) {
+	private static int MaxMove(int col, int row, char player, Tree tree) {
 		if (hasWinner(col, row, player)) {
 			return 9;//EvalGameState(config);
 		}
@@ -580,7 +588,7 @@ public class Connect4{
 		}
 	}
 	 
-	int MinMove(int col, int row, char player, Tree tree) {
+	private static int MinMove(int col, int row, char player, Tree tree) {
 		Node bestMove = tree.getChild(1);
 		Node currMove = tree.getChild(0);//initialize best move
 		Node root = currMove;
