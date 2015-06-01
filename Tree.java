@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 class Tree{
-	ArrayList<Node> children = new ArrayList<Node>();
 	Node root;
 	public void setRootNode(Node node){
 		root = node;
