@@ -636,7 +636,7 @@ public class Connect4{
 		int index = 0;
 		System.out.println(children.size());
 		Node firstChild = children.get(0), currNode = firstChild, rootNode;
-		for(int i = 0;  i < 3; i++){
+		for(int i = 0;  i <= 3; i++){
 			System.out.println(i+"iiiii");
 			firstChild = children.get(i);
 			firstChild.setAlpha(root.alpha);
@@ -705,7 +705,7 @@ public class Connect4{
 					index++;
 					firstChild = children.get(index);
 					currNode = firstChild;
-					for(int i = 0;  i < 3; i++){
+					for(int i = 0;  i <= 3; i++){
 						firstChild = children.get(i);
 						firstChild.setAlpha(root.alpha);
 						firstChild.setBeta(root.beta);
