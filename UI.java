@@ -236,7 +236,15 @@ public class UI extends JFrame {
             turn = gameLogic.addPiece(col, occupiedRow, player);
         }
         updateStatus(turn);
-        if(turn == 1) gameLogic.moveAI();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try{
+                    if(turn == 1) gameLogic.moveAI();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
         //if(turn == 1) gameLogic.moveAI(1);
         //else gameLogic.moveAI(2);
     }
