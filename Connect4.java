@@ -80,6 +80,7 @@ public class Connect4{
 		} 
 
 		newCol = currentCol.replaceFirst("0", tokenString);
+		System.out.println("Player: " + player + "new column: " + newCol);
 		board.put(column, newCol);
 		if(hasWinner(column, row, token)){
 			System.out.println("winner player " + player);
