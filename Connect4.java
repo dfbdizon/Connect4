@@ -40,7 +40,7 @@ public class Connect4{
 				updateRootOpp();
 			}
 			int randomCol = rand.nextInt(7) + 1;
-			int move = Connect4.MinMax();
+			int move = Connect4.MinMax() + 1;
 			col = move;
 			updateRootAI();
 			System.out.println("move: add to column " + move);
@@ -583,9 +583,15 @@ public class Connect4{
 		System.out.println("Player " + root.player + " Score " + root.score + " AI " + root.myMaterial + " Opp" + root.oppMaterial);
 		ArrayList<Node> children = expand(root);
 		children = root.children;
+<<<<<<< HEAD
 		int retVal = children.indexOf(MaxMove (root, 0, Integer.MIN_VALUE, Integer.MAX_VALUE));
 		
 		return retVal
+=======
+		Node max = MaxMove (root, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		System.out.println("MMOOOOOVE" + children.indexOf(max));
+		return children.indexOf(max);
+>>>>>>> 54686993eb857acf6cda0458cb2f8648a9e00572
 	}
 	 
 	void MinMaxIterative(int col, int row, char player){
@@ -602,41 +608,70 @@ public class Connect4{
 
 	}
 	static Node MaxMove(Node root, int depth, double alpha, double beta) {
-		if(depth>8)
+		if(depth>7){
+			System.out.println("END");
 			return root;
-		expand(root);
-		//System.out.println("depth" + depth);
-		ArrayList<Node> children = root.children;
-		Node bestMove = children.get(0);//initialize best move
-		Node currMove = children.get(1);
-		for(int i = 0; i <= children.size()-1; i++) {//iterate on each move
-			currMove = children.get(i);
-			alpha=Math.max(alpha,bestMove.score);
-			depth=depth+1;
-			if ((MinMove(currMove, depth, alpha, beta).score) > (bestMove).score)
-				bestMove = currMove;
+		}
+		Node bestMove;
+		try{
+			expand(root);
+		}catch(StringIndexOutOfBoundsException e){
+			e.printStackTrace();
+		}finally{
+			System.out.println("depth" + depth);
+			ArrayList<Node> children = root.children;
+			bestMove = children.get(0);//initialize best move
+			Node currMove = children.get(1);
+			Node dummy;
+			for(int i = 0; i <= children.size()-1; i++) {//iterate on each move
+				currMove = children.get(i);
+				alpha=Math.max(alpha,bestMove.score);
+				
+				depth=depth+1;
+				dummy = MinMove(currMove, depth, alpha, beta); 
+				if(depth>7)
+					return bestMove;
+				if (dummy.score > (bestMove).score)
+					bestMove = currMove;	
+				if( dummy.score>=beta)
+					return dummy;
 			}
-		//System.out.println(children.get(children.indexOf(bestMove)));
+			System.out.println(children.get(children.indexOf(bestMove)));
+		}
+		System.out.println("bestMove????????????//");
 		return bestMove;
 	}
 	
 	private static Node MinMove(Node root, int depth, double alpha, double beta) {
-		if(depth>8)
+		if(depth>=7){
+			System.out.println("END");
 			return root;
-		expand(root);
-		//System.out.println("depth" + depth);
-		ArrayList<Node> children = root.children;
-		Node bestMove = children.get(0);
-		Node currMove = children.get(1);//initialize best move
-		Node root2 = currMove;
-		for(int i = 0; i <= children.size()-1; i++) {//iterate on all moves
-			beta=Math.min(beta, bestMove.score);
-			depth = depth+1;
-			if (MaxMove(currMove, depth++, alpha, beta).score > (bestMove).score) 
-				bestMove = currMove;
-			//beta=Math.min(beta, bestMove.score);
 		}
-		//System.out.println(children.get(children.indexOf(bestMove)));
+		Node bestMove;
+		try{
+			expand(root);
+		}catch(StringIndexOutOfBoundsException e){
+			e.printStackTrace();
+		}finally{
+			System.out.println("depth" + depth);
+			ArrayList<Node> children = root.children;
+			bestMove = children.get(0);
+			Node currMove = children.get(1);//initialize best move
+			Node dummy = currMove;
+			for(int i = 0; i <= children.size()-1; i++) {//iterate on all moves
+				beta=Math.min(beta, bestMove.score);
+				depth = depth+1;
+				if(depth>7)
+					return bestMove;
+				dummy = MaxMove(currMove, depth++, alpha, beta);
+				if (dummy.score > (bestMove).score) 
+					bestMove = currMove;
+				if(dummy.score<=alpha)
+					return dummy;
+				//beta=Math.min(beta, bestMove.score);
+			}
+			System.out.println(children.get(children.indexOf(bestMove)));
+		}
 		return bestMove;
 	}
 	/*
@@ -792,6 +827,7 @@ public class Connect4{
 		for(int i = 1; i < 8; i++){
 			Node node = new Node(parent);
 			node.setPlayer();
+			System.out.println("adding child " + i);
 			if(node.setConfig(i)){
 				node.setScores();
 				parent.children.add(node);

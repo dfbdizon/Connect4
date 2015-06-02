@@ -240,6 +240,7 @@ public class UI extends JFrame {
             public void run() {
                 try{
                     if(turn == 1) gameLogic.moveAI();
+                    System.out.println("MOVINGMOVINGMOVING");
                 } catch (Exception e){
                     e.printStackTrace();
                 }
