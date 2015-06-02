@@ -41,7 +41,7 @@ public class Connect4{
 				updateRootOpp();
 			}
 			int randomCol = rand.nextInt(7) + 1;
-			int move = Connect4.MinMax() + 1;
+			int move = Connect4.MinMax();
 			col = move;
 			updateRootAI();
 			System.out.println("move: add to column " + move);
@@ -589,21 +589,7 @@ public class Connect4{
 		int index = children.indexOf(max);
 		int col = children.get(index).col;
 		System.out.println(index + " " + col);
-		return children.indexOf(max);
-	}
-	 
-	void MinMaxIterative(int col, int row, char player){
-		boolean isMax = true;
-		while(!hasWinner(col, row, player)){
-			if(isMax){
-				
-				isMax=!isMax;
-			}else{
-				
-				isMax=!isMax;
-			}
-		}
-
+		return (max.col);
 	}
 	static Node MaxMove(Node root, int depth, double alpha, double beta) {
 		if(depth>7){
@@ -627,8 +613,6 @@ public class Connect4{
 				
 				depth=depth+1;
 				dummy = MinMove(currMove, depth, alpha, beta); 
-				if(depth>7)
-					return bestMove;
 				if (dummy.score > (bestMove).score)
 					bestMove = currMove;	
 				if( dummy.score>=beta)
@@ -659,8 +643,6 @@ public class Connect4{
 			for(int i = 0; i <= children.size()-1; i++) {//iterate on all moves
 				beta=Math.min(beta, bestMove.score);
 				depth = depth+1;
-				if(depth>7)
-					return bestMove;
 				dummy = MaxMove(currMove, depth++, alpha, beta);
 				if (dummy.score > (bestMove).score) 
 					bestMove = currMove;

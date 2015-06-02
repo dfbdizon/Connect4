@@ -595,7 +595,7 @@ public class Connect4Test{
 		int index = children.indexOf(max);
 		int col = children.get(index).col;
 		System.out.println(index + " " + col);
-		return children.indexOf(max);
+		return (max.col);
 	}
 
 	static NodeTest MaxMove(NodeTest root2, int depth, double alpha, double beta) {
@@ -620,8 +620,6 @@ public class Connect4Test{
 				
 				depth=depth+1;
 				dummy = MinMove(currMove, depth, alpha, beta); 
-				if(depth>7)
-					return bestMove;
 				if (dummy.score > (bestMove).score)
 					bestMove = currMove;	
 				if( dummy.score>=beta)
@@ -652,8 +650,6 @@ public class Connect4Test{
 			for(int i = 0; i <= children.size()-1; i++) {//iterate on all moves
 				beta=Math.min(beta, bestMove.score);
 				depth = depth+1;
-				if(depth>7)
-					return bestMove;
 				dummy = MaxMove(currMove, depth++, alpha, beta);
 				if (dummy.score > (bestMove).score) 
 					bestMove = currMove;
