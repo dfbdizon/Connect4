@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-public class Connect4{
+public class Connect4Test{
 	private static HashMap<Integer, String> board = new HashMap<Integer, String>(7);
 	private static boolean endGame = false;
 	private static UI gameUI;
@@ -16,7 +16,8 @@ public class Connect4{
 	private static boolean isFirstMoveAI = true;
 	private static boolean isFirstMoveOpp = true;
 
-	public Connect4(){
+	protected static int whichAI;
+	public Connect4Test(){
 		initializeBoard();
 	}
 
@@ -205,7 +206,12 @@ public class Connect4{
 	//Dapat may magssave ng stateScores ni player 1 and 2 doon sa currentState
 
 	// sa tree, computation ng statescore ay iincrement lang from parent, in favor of AI agent pa rin 
-	public static double getStateScore(double myMaterial, double oppMaterial){
+	public static double getStateScoreForAI1(double myMaterial, double oppMaterial){
+		double retDouble = myMaterial - oppMaterial;
+		return retDouble;
+	}
+
+	public static double getStateScoreForAI2(double myMaterial, double oppMaterial){
 		double retDouble = myMaterial - oppMaterial;
 		return retDouble;
 	}
