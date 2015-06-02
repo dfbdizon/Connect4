@@ -80,7 +80,6 @@ public class Connect4Test{
 		} 
 		System.out.println("Player: " + player);
 		newCol = currentCol.replaceFirst("0", tokenString);
-		System.out.println("Player: " + player + "new column: " + newCol);
 		board.put(column, newCol);
 		if(hasWinner(column, row, token)){
 			System.out.println("winner player " + player);
@@ -801,7 +800,7 @@ public class Connect4Test{
 	private static void updateRootAI(){
 		root.children.clear();
 		expand(root);
-		Node temp;
+		NodeTest temp;
 		for(int i = 0; i < root.children.size(); i++){
 			temp = root.children.get(i);
 			if(temp.col == col){
@@ -814,7 +813,7 @@ public class Connect4Test{
 	private static void updateRootOpp(){
 		root.children.clear();
 		expand(root);
-		Node temp; 
+		NodeTest temp; 
 		for(int i = 0; i < root.children.size(); i++){
 			temp = root.children.get(i);
 			if(temp.col == col){
@@ -823,10 +822,11 @@ public class Connect4Test{
 			}
 		}	
 	}
-	private static ArrayList<Node> expand(Node parent) {
+	private static ArrayList<NodeTest> expand(NodeTest parent) {
+		
 		parent.children.clear();
 		for(int i = 1; i < 8; i++){
-			Node node = new Node(parent);
+			NodeTest node = new NodeTest(parent);
 			node.setPlayer();
 			//System.out.println("adding child " + i);
 			if(node.setConfig(i)){
