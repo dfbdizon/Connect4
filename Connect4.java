@@ -213,6 +213,7 @@ public class Connect4{
 
 	protected static double updateMaterial(char player, int row, int col, double prevMaterial, HashMap<Integer, String> board){
 		double retDouble = prevMaterial;
+	//	boolean winningMove = false;
 		retDouble += checkHowManyInARow(player, row, col, board);
 		return retDouble;
 	}
@@ -283,7 +284,7 @@ public class Connect4{
 						retDouble += .5;
 					}
 					else if(right2 == player){//0PPP|P
-						retDouble += 2; //perfect 4 in a row
+						retDouble += 10; //perfect 4 in a row
 					}
 				}
 			}
@@ -304,7 +305,7 @@ public class Connect4{
 						retDouble += .5;
 					}
 					else if(left2 == player){ //P|PPP0
-						retDouble += 2;
+						retDouble += 10;
 					}
 				}
 			}
@@ -319,7 +320,7 @@ public class Connect4{
 					retDouble += .5;
 				}
 				else if(left1 == player){ // PPP|P
-					retDouble += 2;
+					retDouble += 10;
 				}
 			}
 		}
@@ -349,7 +350,7 @@ public class Connect4{
 						retDouble += .1;
 					}
 					else if(down2 == player){//0PPP|P
-						retDouble += 1; //perfect 4 in a row
+						retDouble += 10; //perfect 4 in a row
 					}
 				}
 			}
@@ -370,7 +371,7 @@ public class Connect4{
 						retDouble += .5;
 					}
 					else if(up2 == player){ //P|PPP0
-						retDouble += 2;
+						retDouble += 10;
 					}
 				}
 			}
@@ -385,7 +386,7 @@ public class Connect4{
 					retDouble += .5;
 				}
 				else if(up1 == player){ // PPP|P
-					retDouble += 2;
+					retDouble += 10;
 				}
 			}
 		}
@@ -415,7 +416,7 @@ public class Connect4{
 						retDouble += .5;
 					}
 					else if(downRight2 == player){//0PPP|P
-						retDouble += 2; //perfect 4 in a row
+						retDouble += 10; //perfect 4 in a row
 					}
 				}
 			}
@@ -436,7 +437,7 @@ public class Connect4{
 						retDouble += .5;
 					}
 					else if(upLeft2 == player){ //P|PPP0
-						retDouble += 2;
+						retDouble += 10;
 					}
 				}
 			}
@@ -451,7 +452,7 @@ public class Connect4{
 					retDouble += .5;
 				}
 				else if(upLeft1 == player){ // PPP|P
-					retDouble += 2;
+					retDouble += 10;
 				}
 			}
 		}
@@ -481,7 +482,7 @@ public class Connect4{
 						retDouble += .5;
 					}
 					else if(downLeft2 == player){//0PPP|P
-						retDouble += 2; //perfect 4 in a row
+						retDouble += 10; //perfect 4 in a row
 					}
 				}
 			}
@@ -502,7 +503,7 @@ public class Connect4{
 						retDouble += .5;
 					}
 					else if(upRight2 == player){ //P|PPP0
-						retDouble += 2;
+						retDouble += 10;
 					}
 				}
 			}
@@ -517,7 +518,7 @@ public class Connect4{
 					retDouble += .5;
 				}
 				else if(upRight1 == player){ // PPP|P
-					retDouble += 2;
+					retDouble += 10;
 				}
 			}
 		}
