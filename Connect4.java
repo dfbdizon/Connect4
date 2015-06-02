@@ -41,7 +41,7 @@ public class Connect4{
 				updateRootOpp();
 			}
 			int randomCol = rand.nextInt(7) + 1;
-			int move = Connect4.MinMax() + 1;
+			int move = Connect4.MinMax();
 			col = move;
 			updateRootAI();
 			System.out.println("move: add to column " + move);
@@ -87,9 +87,18 @@ public class Connect4{
 			if(player == 1) return 4;
 			else return 3;
 		}
-		//else if (Check if draw)
+		else if(isDraw()){
+			return 5;
+		}
 		if(player == 1) return 2;
 		else return 1;
+	}
+
+	private static boolean isDraw(){
+		for(int i = 1; i <= 7; i++){
+			if(board.get(i).indexOf("0") != -1) return false;
+		}
+		return true;
 	}
 
 	@SuppressWarnings("unused")
@@ -592,25 +601,12 @@ public class Connect4{
 			System.out.println("Index" + i + "AI: " + temp.myMaterial);
 		}
 		Node max = MaxMove (root, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
-		int index = children.indexOf(max);
+		int index = max.col;
 		int col = children.get(index).col;
 		Node test = children.get(index);
 		System.out.println("Index" + index + " Player " + test.player + " AI SCORE " + test.myMaterial + " Opp: " + test.oppMaterial);
-		return children.indexOf(max);
-	}
-	 
-	void MinMaxIterative(int col, int row, char player){
-		boolean isMax = true;
-		while(!hasWinner(col, row, player)){
-			if(isMax){
-				
-				isMax=!isMax;
-			}else{
-				
-				isMax=!isMax;
-			}
-		}
-
+		//System.out.println(index + " " + col);
+		return (max.col);
 	}
 	static Node MaxMove(Node root, int depth, double alpha, double beta) {
 		if(depth>7){
@@ -634,8 +630,6 @@ public class Connect4{
 				
 				depth=depth+1;
 				dummy = MinMove(currMove, depth, alpha, beta); 
-				if(depth>7)
-					return bestMove;
 				if (dummy.score > (bestMove).score)
 					bestMove = currMove;	
 				if( dummy.score>=beta)
@@ -666,8 +660,6 @@ public class Connect4{
 			for(int i = 0; i <= children.size()-1; i++) {//iterate on all moves
 				beta=Math.min(beta, bestMove.score);
 				depth = depth+1;
-				if(depth>7)
-					return bestMove;
 				dummy = MaxMove(currMove, depth++, alpha, beta);
 				if (dummy.score > (bestMove).score) 
 					bestMove = currMove;

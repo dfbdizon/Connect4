@@ -46,7 +46,7 @@ public class Connect4Test{
 			col = move;
 			updateRootAI();
 			System.out.println("move: add to column " + move);
-			gameUI.addToken(move, 1);
+			gameUI.addToken(move, 2);
 
 //		}
 	//	else if(isFirstMoveAI){
@@ -78,7 +78,7 @@ public class Connect4Test{
 			tokenString = "2";
 			token = '2';
 		} 
-
+		System.out.println("Player: " + player);
 		newCol = currentCol.replaceFirst("0", tokenString);
 		board.put(column, newCol);
 		if(hasWinner(column, row, token)){
@@ -87,9 +87,18 @@ public class Connect4Test{
 			if(player == 1) return 4;
 			else return 3;
 		}
-		//else if (Check if draw)
+		else if(isDraw()){
+			return 5;
+		}
 		if(player == 1) return 2;
 		else return 1;
+	}
+
+	private static boolean isDraw(){
+		for(int i = 1; i <= 7; i++){
+			if(board.get(i).indexOf("0") != -1) return false;
+		}
+		return true;
 	}
 
 	@SuppressWarnings("unused")
@@ -193,7 +202,7 @@ public class Connect4Test{
 		} catch(Exception e){
 			e.printStackTrace();
 		}
-		firstMove();
+		//moveAI();
 	}
 	// Heuristic 1?
 	// Count number of possible 4 in a rows that each player can still make in the current state
@@ -595,7 +604,7 @@ public class Connect4Test{
 		int index = children.indexOf(max);
 		int col = children.get(index).col;
 		System.out.println(index + " " + col);
-		return children.indexOf(max);
+		return (max.col);
 	}
 
 	static NodeTest MaxMove(NodeTest root2, int depth, double alpha, double beta) {
@@ -620,8 +629,6 @@ public class Connect4Test{
 				
 				depth=depth+1;
 				dummy = MinMove(currMove, depth, alpha, beta); 
-				if(depth>7)
-					return bestMove;
 				if (dummy.score > (bestMove).score)
 					bestMove = currMove;	
 				if( dummy.score>=beta)
@@ -652,8 +659,6 @@ public class Connect4Test{
 			for(int i = 0; i <= children.size()-1; i++) {//iterate on all moves
 				beta=Math.min(beta, bestMove.score);
 				depth = depth+1;
-				if(depth>7)
-					return bestMove;
 				dummy = MaxMove(currMove, depth++, alpha, beta);
 				if (dummy.score > (bestMove).score) 
 					bestMove = currMove;
