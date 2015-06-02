@@ -288,15 +288,15 @@ public class Connect4Test{
 			else if(right == player){ //0P|P
 				//check if open ung left1
 				if(left1 == '0'){ //0|0PP
-					retDouble += .2;
+					retDouble += 1;
 				}
 				if(right1 == '0'){//0PP|0
-					retDouble += .2;
+					retDouble += 1;
 				}
 				else if(right1 == player){//0PP|P
-					retDouble += .5;
+					retDouble += 3;
 					if(right2 == '0'){//0PPP|0
-						retDouble += .5;
+						retDouble += 3;
 					}
 					else if(right2 == player){//0PPP|P
 						retDouble += 10; //perfect 4 in a row
@@ -312,12 +312,12 @@ public class Connect4Test{
 		else if(left == player){ //P|P
 			if(right == '0'){ //PP|0
 				if(right1 == '0' || left1 == '0'){ //0|PP0 or PP0|0
-					retDouble += .2;
+					retDouble += 1;
 				}
 				if(left1 == player){ //P|PP0
-					retDouble += .5; 
+					retDouble += 3; 
 					if(left2 == '0'){ //0|PPP0
-						retDouble += .5;
+						retDouble += 3;
 					}
 					else if(left2 == player){ //P|PPP0
 						retDouble += 10;
@@ -326,13 +326,13 @@ public class Connect4Test{
 			}
 			else if(right == player){ //PP|P
 				if(right1 == '0'){//PPP|0
-					retDouble += .5;
+					retDouble += 3;
 				}
 				else if(right1 == player){ // PPP|P
-					retDouble += 2;
+					retDouble += 10;
 				}
 				if(left1 == '0'){ //0|PPP
-					retDouble += .5;
+					retDouble += 3;
 				}
 				else if(left1 == player){ // PPP|P
 					retDouble += 10;
@@ -354,15 +354,15 @@ public class Connect4Test{
 			else if(down == player){ //0P|P
 				//check if open ung left1
 				if(up1 == '0'){ //0|0PP
-					retDouble += .2;
+					retDouble += 1;
 				}
 				if(down1 == '0'){//0PP|0
-					retDouble += .2;
+					retDouble += 1;
 				}
 				else if(down1 == player){//0PP|P
-					retDouble += .1;
+					retDouble += 1;
 					if(down2 == '0'){//0PPP|0
-						retDouble += .1;
+						retDouble += 3;
 					}
 					else if(down2 == player){//0PPP|P
 						retDouble += 10; //perfect 4 in a row
@@ -378,12 +378,12 @@ public class Connect4Test{
 		else if(up == player){ //P|P
 			if(down == '0'){ //PP|0
 				if(down1 == '0' || up1 == '0'){ //0|PP0 or PP0|0
-					retDouble += .2;
+					retDouble += 1;
 				}
 				if(up1 == player){ //P|PP0
-					retDouble += .5; 
+					retDouble += 3; 
 					if(up2 == '0'){ //0|PPP0
-						retDouble += .5;
+						retDouble += 3;
 					}
 					else if(up2 == player){ //P|PPP0
 						retDouble += 10;
@@ -392,13 +392,13 @@ public class Connect4Test{
 			}
 			else if(down == player){ //PP|P
 				if(down1 == '0'){//PPP|0
-					retDouble += .5;
+					retDouble += 3;
 				}
 				else if(down1 == player){ // PPP|P
-					retDouble += 2;
+					retDouble += 10;
 				}
 				if(up1 == '0'){ //0|PPP
-					retDouble += .5;
+					retDouble += 3;
 				}
 				else if(up1 == player){ // PPP|P
 					retDouble += 10;
@@ -420,15 +420,15 @@ public class Connect4Test{
 			else if(downRight == player){ //0P|P
 				//check if open ung left1
 				if(upLeft1 == '0'){ //0|0PP
-					retDouble += .2;
+					retDouble += 1;
 				}
 				if(downRight1 == '0'){//0PP|0
-					retDouble += .1;
+					retDouble += 1;
 				}
 				else if(downRight1 == player){//0PP|P
-					retDouble += .5;
+					retDouble += 3;
 					if(downRight2 == '0'){//0PPP|0
-						retDouble += .5;
+						retDouble += 3;
 					}
 					else if(downRight2 == player){//0PPP|P
 						retDouble += 10; //perfect 4 in a row
@@ -444,12 +444,12 @@ public class Connect4Test{
 		else if(upLeft == player){ //P|P
 			if(downRight == '0'){ //PP|0
 				if(downRight1 == '0' || upLeft1 == '0'){ //0|PP0 or PP0|0
-					retDouble += .2;
+					retDouble += 1;
 				}
 				if(upLeft1 == player){ //P|PP0
-					retDouble += .5; 
+					retDouble += 3; 
 					if(upLeft2 == '0'){ //0|PPP0
-						retDouble += .5;
+						retDouble += 3;
 					}
 					else if(upLeft2 == player){ //P|PPP0
 						retDouble += 10;
@@ -458,13 +458,13 @@ public class Connect4Test{
 			}
 			else if(downRight == player){ //PP|P
 				if(downRight1 == '0'){//PPP|0
-					retDouble += .5;
+					retDouble += 3;
 				}
 				else if(downRight1 == player){ // PPP|P
-					retDouble += 2;
+					retDouble += 10;
 				}
 				if(upLeft1 == '0'){ //0|PPP
-					retDouble += .5;
+					retDouble += 3;
 				}
 				else if(upLeft1 == player){ // PPP|P
 					retDouble += 10;
@@ -486,15 +486,15 @@ public class Connect4Test{
 			else if(downLeft == player){ //0P|P
 				//check if open ung left1
 				if(upRight1 == '0'){ //0|0PP
-					retDouble += .2;
+					retDouble += 1;
 				}
 				if(downLeft1 == '0'){//0PP|0
-					retDouble += .1;
+					retDouble += 1;
 				}
 				else if(downLeft1 == player){//0PP|P
-					retDouble += .5;
+					retDouble += 3;
 					if(downLeft2 == '0'){//0PPP|0
-						retDouble += .5;
+						retDouble += 3;
 					}
 					else if(downLeft2 == player){//0PPP|P
 						retDouble += 10; //perfect 4 in a row
@@ -510,12 +510,12 @@ public class Connect4Test{
 		else if(upRight == player){ //P|P
 			if(downLeft == '0'){ //PP|0
 				if(downLeft1 == '0' || upRight1 == '0'){ //0|PP0 or PP0|0
-					retDouble += .2;
+					retDouble += 1;
 				}
 				else if(upRight1 == player){ //P|PP0
-					retDouble += .5; 
+					retDouble += 3; 
 					if(upRight2 == '0'){ //0|PPP0
-						retDouble += .5;
+						retDouble += 3;
 					}
 					else if(upRight2 == player){ //P|PPP0
 						retDouble += 10;
@@ -524,13 +524,13 @@ public class Connect4Test{
 			}
 			else if(downLeft == player){ //PP|P
 				if(downLeft1 == '0'){//PPP|0
-					retDouble += .5;
+					retDouble += 3;
 				}
 				else if(downLeft1 == player){ // PPP|P
-					retDouble += 2;
+					retDouble += 10;
 				}
 				if(upRight1 == '0'){ //0|PPP
-					retDouble += .5;
+					retDouble += 3;
 				}
 				else if(upRight1 == player){ // PPP|P
 					retDouble += 10;
@@ -622,13 +622,13 @@ public class Connect4Test{
 		}finally{
 			//System.out.println("depth" + depth);
 			ArrayList<NodeTest> children = root2.children;
-			bestMove = children.get(0);//initialize best move
-			NodeTest currMove = children.get(1);
+			bestMove = null;
+			NodeTest currMove;//initialize best move
 			NodeTest dummy;
+			if(children.size() >= 1) bestMove = children.get(0);
 			for(int i = 0; i <= children.size()-1; i++) {//iterate on each move
 				currMove = children.get(i);
 				alpha=Math.max(alpha,bestMove.score);
-				
 				depth=depth+1;
 				dummy = MinMove(currMove, depth, alpha, beta); 
 				if (dummy.score > (bestMove).score)
@@ -655,10 +655,12 @@ public class Connect4Test{
 		}finally{
 			//System.out.println("depth" + depth);
 			ArrayList<NodeTest> children = root2.children;
-			bestMove = children.get(0);
-			NodeTest currMove = children.get(1);//initialize best move
-			NodeTest dummy = currMove;
+			bestMove = null;
+			NodeTest currMove;//initialize best move
+			NodeTest dummy;
+			if(children.size() >= 1) bestMove = children.get(0);
 			for(int i = 0; i <= children.size()-1; i++) {//iterate on all moves
+				currMove = children.get(i);
 				beta=Math.min(beta, bestMove.score);
 				depth = depth+1;
 				dummy = MaxMove(currMove, depth++, alpha, beta);
