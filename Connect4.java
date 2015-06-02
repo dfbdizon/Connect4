@@ -219,6 +219,7 @@ public class Connect4{
 
 	//try: pag nag combi ie 2, + .2 - .1 since ung previous one in a row void na dahil 2 in a row na?, so if nag3, +.3 -.2
 	//so parang essentially + .1 lang -_- TRY 
+	//big score if 3 in a row tapos one move na lang panalo na
 	private static double checkHowManyInARow(char player, int row, int col, HashMap<Integer, String> board){
 		double retDouble = 0;
 
@@ -227,7 +228,7 @@ public class Connect4{
 		char left2, right2, up2, down2, upRight2, upLeft2, downRight2, downLeft2;
 		
 		left = getLeft(col, row, board);
-		System.out.println("row" + row);
+		//System.out.println("row" + row);
 		right = getRight(col, row, board);
 		up = getUp(col, row, board);
 		down = getDown(col, row, board);
@@ -280,7 +281,7 @@ public class Connect4{
 						retDouble += .1;
 					}
 					else if(right2 == player){//0PPP|P
-						retDouble += .20; //perfect 4 in a row
+						retDouble += 1; //perfect 4 in a row
 					}
 				}
 			}
@@ -310,13 +311,13 @@ public class Connect4{
 					retDouble += .1;
 				}
 				else if(right1 == player){ // PPP|P
-					retDouble += .20;
+					retDouble += 1;
 				}
 				if(left1 == '0'){ //0|PPP
 					retDouble += .1;
 				}
 				else if(left1 == player){ // PPP|P
-					retDouble += .20;
+					retDouble += 1;
 				}
 			}
 		}
@@ -346,7 +347,7 @@ public class Connect4{
 						retDouble += .1;
 					}
 					else if(down2 == player){//0PPP|P
-						retDouble += .20; //perfect 4 in a row
+						retDouble += 1; //perfect 4 in a row
 					}
 				}
 			}
@@ -367,7 +368,7 @@ public class Connect4{
 						retDouble += .1;
 					}
 					else if(up2 == player){ //P|PPP0
-						retDouble += .20;
+						retDouble += 1;
 					}
 				}
 			}
@@ -382,7 +383,7 @@ public class Connect4{
 					retDouble += .1;
 				}
 				else if(up1 == player){ // PPP|P
-					retDouble += .20;
+					retDouble += 1;
 				}
 			}
 		}
@@ -412,7 +413,7 @@ public class Connect4{
 						retDouble += .1;
 					}
 					else if(downRight2 == player){//0PPP|P
-						retDouble += .20; //perfect 4 in a row
+						retDouble += 1; //perfect 4 in a row
 					}
 				}
 			}
@@ -433,7 +434,7 @@ public class Connect4{
 						retDouble += .1;
 					}
 					else if(upLeft2 == player){ //P|PPP0
-						retDouble += .20;
+						retDouble += 1;
 					}
 				}
 			}
@@ -442,13 +443,13 @@ public class Connect4{
 					retDouble += .1;
 				}
 				else if(downRight1 == player){ // PPP|P
-					retDouble += .20;
+					retDouble += 1;
 				}
 				if(upLeft1 == '0'){ //0|PPP
 					retDouble += .1;
 				}
 				else if(upLeft1 == player){ // PPP|P
-					retDouble += .20;
+					retDouble += 1;
 				}
 			}
 		}
@@ -478,7 +479,7 @@ public class Connect4{
 						retDouble += .1;
 					}
 					else if(downLeft2 == player){//0PPP|P
-						retDouble += .10; //perfect 4 in a row
+						retDouble += 1; //perfect 4 in a row
 					}
 				}
 			}
@@ -499,7 +500,7 @@ public class Connect4{
 						retDouble += .1;
 					}
 					else if(upRight2 == player){ //P|PPP0
-						retDouble += .20;
+						retDouble += 1;
 					}
 				}
 			}
@@ -508,13 +509,13 @@ public class Connect4{
 					retDouble += .1;
 				}
 				else if(downLeft1 == player){ // PPP|P
-					retDouble += .20;
+					retDouble += 1;
 				}
 				if(upRight1 == '0'){ //0|PPP
 					retDouble += .1;
 				}
 				else if(upRight1 == player){ // PPP|P
-					retDouble += .20;
+					retDouble += 1;
 				}
 			}
 		}
@@ -531,7 +532,7 @@ public class Connect4{
 
 	private static char getRight(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0';
-		System.out.println(row);
+		//System.out.println(row);
 		if(col < 7) retChar = board.get(col+1).charAt(row);
 		return retChar;
 	}
@@ -579,9 +580,12 @@ public class Connect4{
 		//Tree mainTree = new Tree();
 		//mainTree.setRootNode(new Node(board, 0));
 		//Node root = mainTree.returnRoot();
+		System.out.println("Player " + root.player + " Score " + root.score + " AI " + root.myMaterial + " Opp" + root.oppMaterial);
 		ArrayList<Node> children = expand(root);
 		children = root.children;
-		return children.indexOf(MaxMove (root, 0, Integer.MIN_VALUE, Integer.MAX_VALUE));
+		int retVal = children.indexOf(MaxMove (root, 0, Integer.MIN_VALUE, Integer.MAX_VALUE));
+		
+		return retVal
 	}
 	 
 	void MinMaxIterative(int col, int row, char player){
@@ -601,7 +605,7 @@ public class Connect4{
 		if(depth>8)
 			return root;
 		expand(root);
-		System.out.println("depth" + depth);
+		//System.out.println("depth" + depth);
 		ArrayList<Node> children = root.children;
 		Node bestMove = children.get(0);//initialize best move
 		Node currMove = children.get(1);
@@ -612,7 +616,7 @@ public class Connect4{
 			if ((MinMove(currMove, depth, alpha, beta).score) > (bestMove).score)
 				bestMove = currMove;
 			}
-		System.out.println(children.get(children.indexOf(bestMove)));
+		//System.out.println(children.get(children.indexOf(bestMove)));
 		return bestMove;
 	}
 	
@@ -620,7 +624,7 @@ public class Connect4{
 		if(depth>8)
 			return root;
 		expand(root);
-		System.out.println("depth" + depth);
+		//System.out.println("depth" + depth);
 		ArrayList<Node> children = root.children;
 		Node bestMove = children.get(0);
 		Node currMove = children.get(1);//initialize best move
@@ -632,7 +636,7 @@ public class Connect4{
 				bestMove = currMove;
 			//beta=Math.min(beta, bestMove.score);
 		}
-		System.out.println(children.get(children.indexOf(bestMove)));
+		//System.out.println(children.get(children.indexOf(bestMove)));
 		return bestMove;
 	}
 	/*
@@ -792,6 +796,8 @@ public class Connect4{
 				node.setScores();
 				parent.children.add(node);
 			}
+			// System.out.println("Parent score: " + parent.score);
+			// System.out.println("Node score: " + node.score);
 		}
 		return null;
 	}
