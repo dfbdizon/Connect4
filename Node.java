@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+zimport java.util.ArrayList;
 import java.util.HashMap;
 
 class Node{
@@ -47,12 +47,12 @@ class Node{
 		HashMap<Integer, String> moved = (HashMap<Integer, String>) parent.config.clone();
 		String currConfig = moved.get(col);
 		boolean retVal = true;
-		//System.out.println("before: " + currConfig);
+		System.out.println("before: " + currConfig);
 		if(currConfig.lastIndexOf(this.player) < 5){
 			currConfig = currConfig.replaceFirst("0", ""+ this.player);
 			this.row = currConfig.lastIndexOf(this.player);
 			this.col = col;
-			//System.out.println("after: " + currConfig);
+			System.out.println("after: " + currConfig);
 			moved.replace(col, currConfig);
 			this.config = moved;
 		}
