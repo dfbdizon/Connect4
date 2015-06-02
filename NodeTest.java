@@ -3,9 +3,9 @@ import java.util.HashMap;
 
 class NodeTest{
 	HashMap<Integer, String> config;
-	Node parent;
+	NodeTest parent;
 	double score, myMaterial, oppMaterial, alpha, beta, value;
-	ArrayList<Node> children = new ArrayList<Node>();
+	ArrayList<NodeTest> children = new ArrayList<NodeTest>();
 	char player; //kung sinong nagplay ng move na yon
 
 	Node root;
@@ -15,7 +15,7 @@ class NodeTest{
 	// 	score = newScore;
 	// 	this.player = player;
 	// }
-	public NodeTest(Node parent){
+	public NodeTest(NodeTest parent){
 		this.parent = parent;
 		alpha = Integer.MIN_VALUE;
 		beta = Integer.MAX_VALUE;
@@ -32,7 +32,7 @@ class NodeTest{
 	public void setBeta(double beta){
 		this.beta = beta;
 	}
-	public Node getParent(){
+	public NodeTest getParent(){
 		return this.parent;
 	}
 	public void setPlayer(){
@@ -73,16 +73,16 @@ class NodeTest{
 		if(Connect4Test.whichAI == 1) this.score = Connect4Test.getStateScoreForAI1(this.myMaterial, this.oppMaterial);
 		else this.score = Connect4Test.getStateScoreForAI2(this.myMaterial, this.oppMaterial);
 	}
-	public void addChild(Node node){
+	public void addChild(NodeTest node){
 		children.add(node);
 	}
 	public void removeChild(int index){
 		children.remove(index);
 	}
-	public ArrayList<Node> getChildren(){
+	public ArrayList<NodeTest> getChildren(){
 		return children;
 	}
-	public Node getChild(int index){
+	public NodeTest getChild(int index){
 		return (children.get(index));
 	}
 	
