@@ -15,7 +15,7 @@ class NodeTest{
 	// 	score = newScore;
 	// 	this.player = player;
 	// }
-	public Node(Node parent){
+	public NodeTest(Node parent){
 		this.parent = parent;
 		alpha = Integer.MIN_VALUE;
 		beta = Integer.MAX_VALUE;

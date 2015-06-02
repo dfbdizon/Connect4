@@ -11,7 +11,7 @@ public class Connect4Test{
 	private final static char PLAYER = '2';
 	private final static char AI = '1';
 
-	private static Node root;
+	private static NodeTest root;
 
 	private static boolean isFirstMoveAI = true;
 	private static boolean isFirstMoveOpp = true;
@@ -29,7 +29,7 @@ public class Connect4Test{
 	//	if(!isFirstMoveAI){
 			if(isFirstMoveOpp){ //base case na ito
 				isFirstMoveOpp = false;
-				root = new Node(null);
+				root = new NodeTest(null);
 				root.player = '2'; //si 2 ung huli kasing gumalaw
 				//root.row = 1;
 				//root.col = 4;
@@ -588,10 +588,10 @@ public class Connect4Test{
 		//mainTree.setRootNode(new Node(board, 0));
 		//Node root = mainTree.returnRoot();
 		System.out.println("Player: " + root.player + " Score: " + root.score + " AI: " + root.myMaterial + " Opp: " + root.oppMaterial);
-		ArrayList<Node> children = expand(root);
+		ArrayList<NodeTest> children = expand(root);
 		children = root.children;
 
-		Node max = MaxMove (root, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		NodeTest max = MaxMove (root, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
 		int index = children.indexOf(max);
 		int col = children.get(index).col;
 		System.out.println(index + " " + col);
@@ -611,22 +611,22 @@ public class Connect4Test{
 		}
 
 	}
-	static Node MaxMove(Node root, int depth, double alpha, double beta) {
+	static NodeTest MaxMove(NodeTest root, int depth, double alpha, double beta) {
 		if(depth>7){
 			//System.out.println("END");
 			return root;
 		}
-		Node bestMove;
+		NodeTest bestMove;
 		try{
 			expand(root);
 		}catch(StringIndexOutOfBoundsException e){
 			e.printStackTrace();
 		}finally{
 			//System.out.println("depth" + depth);
-			ArrayList<Node> children = root.children;
+			ArrayList<NodeTest> children = root.children;
 			bestMove = children.get(0);//initialize best move
-			Node currMove = children.get(1);
-			Node dummy;
+			NodeTest currMove = children.get(1);
+			NodeTest dummy;
 			for(int i = 0; i <= children.size()-1; i++) {//iterate on each move
 				currMove = children.get(i);
 				alpha=Math.max(alpha,bestMove.score);
@@ -646,22 +646,22 @@ public class Connect4Test{
 		return bestMove;
 	}
 	
-	private static Node MinMove(Node root, int depth, double alpha, double beta) {
+	private static NodeTest MinMove(NodeTest root, int depth, double alpha, double beta) {
 		if(depth>=7){
 			//System.out.println("END");
 			return root;
 		}
-		Node bestMove;
+		NodeTest bestMove;
 		try{
 			expand(root);
 		}catch(StringIndexOutOfBoundsException e){
 			e.printStackTrace();
 		}finally{
 			//System.out.println("depth" + depth);
-			ArrayList<Node> children = root.children;
+			ArrayList<NodeTest> children = root.children;
 			bestMove = children.get(0);
-			Node currMove = children.get(1);//initialize best move
-			Node dummy = currMove;
+			NodeTest currMove = children.get(1);//initialize best move
+			NodeTest dummy = currMove;
 			for(int i = 0; i <= children.size()-1; i++) {//iterate on all moves
 				beta=Math.min(beta, bestMove.score);
 				depth = depth+1;
@@ -806,7 +806,7 @@ public class Connect4Test{
 	}
 */
 	private static void updateRootAI(){
-		Node temp;
+		NodeTest temp;
 		for(int i = 0; i < root.children.size(); i++){
 			temp = root.children.get(i);
 			if(temp.col == col){
@@ -817,7 +817,7 @@ public class Connect4Test{
 	}
 
 	private static void updateRootOpp(){
-		Node temp; 
+		NodeTest temp; 
 		for(int i = 0; i < root.children.size(); i++){
 			temp = root.children.get(i);
 			if(temp.col == col){
@@ -826,10 +826,10 @@ public class Connect4Test{
 			}
 		}	
 	}
-	private static ArrayList<Node> expand(Node parent) {
+	private static ArrayList<NodeTest> expand(NodeTest parent) {
 		parent.children.clear();
 		for(int i = 1; i < 8; i++){
-			Node node = new Node(parent);
+			NodeTest node = new NodeTest(parent);
 			node.setPlayer();
 			//System.out.println("adding child " + i);
 			if(node.setConfig(i)){
