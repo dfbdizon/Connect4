@@ -798,7 +798,9 @@ public class Connect4Test{
 	}
 */
 	private static void updateRootAI(){
-		NodeTest temp;
+		root.children.clear();
+		expand(root);
+		Node temp;
 		for(int i = 0; i < root.children.size(); i++){
 			temp = root.children.get(i);
 			if(temp.col == col){
@@ -809,7 +811,9 @@ public class Connect4Test{
 	}
 
 	private static void updateRootOpp(){
-		NodeTest temp; 
+		root.children.clear();
+		expand(root);
+		Node temp; 
 		for(int i = 0; i < root.children.size(); i++){
 			temp = root.children.get(i);
 			if(temp.col == col){
@@ -818,10 +822,10 @@ public class Connect4Test{
 			}
 		}	
 	}
-	private static ArrayList<NodeTest> expand(NodeTest parent) {
+	private static ArrayList<Node> expand(Node parent) {
 		parent.children.clear();
 		for(int i = 1; i < 8; i++){
-			NodeTest node = new NodeTest(parent);
+			Node node = new Node(parent);
 			node.setPlayer();
 			//System.out.println("adding child " + i);
 			if(node.setConfig(i)){
