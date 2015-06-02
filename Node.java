@@ -48,7 +48,7 @@ class Node{
 		String currConfig = moved.get(col);
 		boolean retVal = true;
 		//System.out.println("before: " + currConfig);
-		if(currConfig.lastIndexOf(this.player) < 5){
+		if(currConfig.lastIndexOf("0") <= 5){
 			currConfig = currConfig.replaceFirst("0", ""+ this.player);
 			this.row = currConfig.lastIndexOf(this.player);
 			this.col = col;
@@ -64,11 +64,11 @@ class Node{
 	public void setScores(){	
 		if(player == '1'){ //si 1 ung gumalaw
 			this.oppMaterial = parent.oppMaterial;
-			this.myMaterial = Connect4.updateMaterial(this.player, this.row, this.col, this.myMaterial, this.config); 
+			this.myMaterial = Connect4.updateMaterial(this.player, this.row, this.col, parent.myMaterial, this.config); 
 		}
 		else if(player == '2'){ //si 2 ung gumalaw
 			this.myMaterial = parent.myMaterial;
-			this.oppMaterial = Connect4.updateMaterial(this.player, this.row, this.col, this.oppMaterial, this.config);
+			this.oppMaterial = Connect4.updateMaterial(this.player, this.row, this.col, parent.oppMaterial, this.config);
 		}
 		this.score = Connect4.getStateScore(this.myMaterial, this.oppMaterial);
 	}

@@ -65,6 +65,7 @@ public class Connect4{
 	}
 	public static int addPiece(int column, int row, int player){
 		if(player == 2) col = column;
+		System.out.println("Col of opp: " + col);
 		String currentCol = board.get(column);
 		String newCol;
 		char token;
@@ -584,11 +585,16 @@ public class Connect4{
 		System.out.println("Player: " + root.player + " Score: " + root.score + " AI: " + root.myMaterial + " Opp: " + root.oppMaterial);
 		ArrayList<Node> children = expand(root);
 		children = root.children;
-
+		Node temp;
+		for(int i = 0; i < children.size(); i++){
+			temp = children.get(i);
+			System.out.println("Index" + i + "AI: " + temp.myMaterial);
+		}
 		Node max = MaxMove (root, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
 		int index = children.indexOf(max);
 		int col = children.get(index).col;
-		System.out.println(index + " " + col);
+		Node test = children.get(index);
+		System.out.println("Index" + index + " Player " + test.player + " AI SCORE " + test.myMaterial + " Opp: " + test.oppMaterial);
 		return children.indexOf(max);
 	}
 	 
@@ -800,6 +806,8 @@ public class Connect4{
 	}
 */
 	private static void updateRootAI(){
+		root.children.clear();
+		expand(root);
 		Node temp;
 		for(int i = 0; i < root.children.size(); i++){
 			temp = root.children.get(i);
@@ -811,6 +819,8 @@ public class Connect4{
 	}
 
 	private static void updateRootOpp(){
+		root.children.clear();
+		expand(root);
 		Node temp; 
 		for(int i = 0; i < root.children.size(); i++){
 			temp = root.children.get(i);
