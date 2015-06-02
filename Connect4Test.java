@@ -622,7 +622,7 @@ public class Connect4Test{
 		}finally{
 			//System.out.println("depth" + depth);
 			ArrayList<NodeTest> children = root2.children;
-			bestMove = children.get(1);//initialize best move
+			bestMove = children.get(0);//initialize best move
 			NodeTest currMove = children.get(1);
 			NodeTest dummy;
 			for(int i = 0; i <= children.size()-1; i++) {//iterate on each move
@@ -832,7 +832,7 @@ public class Connect4Test{
 			node.setPlayer();
 			//System.out.println("adding child " + i);
 			if(node.setConfig(i)){
-				System.out.println("Here");
+			//	System.out.println("Here");
 				node.setScores();
 				parent.children.add(node);
 			}
