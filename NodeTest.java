@@ -8,7 +8,7 @@ class NodeTest{
 	ArrayList<NodeTest> children = new ArrayList<NodeTest>();
 	char player; //kung sinong nagplay ng move na yon
 
-	Node root;
+	NodeTest root;
 	int row, col;
 	// public Node(HashMap<Integer, String> newConfig, double newScore, char player){
 	// 	config = newConfig;
