@@ -18,7 +18,7 @@ public class Main{
 		System.out.println("First Player Lose: " + firstPlayerLose);
 		System.out.println("Draws: " + draws);
 		gameLogic = new Connect4();
-		gameUI = new UI("faye", gameLogic1.getBoard(), gameLogic);
+		gameUI = new UI("faye", gameLogic.getBoard(), gameLogic);
 
 		gameLogic.setUI(gameUI);
 	}
