@@ -3,21 +3,28 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Connect4Test{
-	private static HashMap<Integer, String> board = new HashMap<Integer, String>(7);
-	private static boolean endGame = false;
+	private static HashMap<Integer, String> board;
+	private static boolean endGame;
 	private static UI gameUI;
-	private static Random rand = new Random();
+	private static Random rand;
 	private static int col;
 	private final static char PLAYER = '2';
 	private final static char AI = '1';
 
 	private static NodeTest root2;
 
-	private static boolean isFirstMoveAI = true;
-	private static boolean isFirstMoveOpp = true;
+	private static boolean isFirstMoveAI;
+	private static boolean isFirstMoveOpp;
 
 	protected static int whichAI;
 	public Connect4Test(){
+		root2 = null;
+		col = 0;
+		isFirstMoveOpp = true;
+		isFirstMoveAI = true;
+		endGame = false;
+		rand = new Random();
+		board = new HashMap<Integer, String>(7);
 		initializeBoard();
 	}
 
@@ -37,7 +44,9 @@ public class Connect4Test{
 				root2.oppMaterial = .1;
 				root2.score = 0;
 				root2.config = (HashMap<Integer, String>)board.clone();
-
+				for(int i = 1; i < 8; i++){
+					System.out.println("ConfigTest " + root2.config.get(i));
+				}
 				//System.out.println("" + root2.config.size());
 			}
 			else{
@@ -47,7 +56,7 @@ public class Connect4Test{
 			int move = Connect4Test.MinMax();
 			col = move;
 			updateRootAI();
-			System.out.println("move: add to column " + move);
+			//System.out.println("move: add to column " + move);
 			gameUI.addToken(move, 2);
 
 //		}
@@ -80,11 +89,11 @@ public class Connect4Test{
 			tokenString = "2";
 			token = '2';
 		} 
-		System.out.println("Player: " + player);
+		//System.out.println("Player: " + player);
 		newCol = currentCol.replaceFirst("0", tokenString);
 		board.put(column, newCol);
 		if(hasWinner(column, row, token)){
-			System.out.println("winner player " + player);
+			//System.out.println("winner player " + player);
 			endGame = true;
 			if(player == 1) return 4;
 			else return 3;
@@ -598,7 +607,7 @@ public class Connect4Test{
 		//Tree mainTree = new Tree();
 		//mainTree.setRootNode(new Node(board, 0));
 		//Node root = mainTree.returnRoot();
-		System.out.println("Player: " + root2.player + " Score: " + root2.score + " AI: " + root2.myMaterial + " Opp: " + root2.oppMaterial);
+		//System.out.println("Player: " + root2.player + " Score: " + root2.score + " AI: " + root2.myMaterial + " Opp: " + root2.oppMaterial);
 		ArrayList<NodeTest> children = expand(root2);
 		children = root2.children;
 

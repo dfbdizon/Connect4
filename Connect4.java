@@ -3,20 +3,27 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Connect4{
-	private static HashMap<Integer, String> board = new HashMap<Integer, String>(7);
-	private static boolean endGame = false;
+	private static HashMap<Integer, String> board;
+	private static boolean endGame;
 	private static UI gameUI;
-	private static Random rand = new Random();
+	private static Random rand;
 	private static int col;
 	private final static char PLAYER = '2';
 	private final static char AI = '1';
 
 	private static Node root;
 
-	private static boolean isFirstMoveAI = true;
-	private static boolean isFirstMoveOpp = true;
+	private static boolean isFirstMoveAI;
+	private static boolean isFirstMoveOpp;
 
 	public Connect4(){
+		root = null;
+		col = 0;
+		isFirstMoveOpp = true;
+		isFirstMoveAI = true;
+		endGame = false;
+		rand = new Random();
+		board = new HashMap<Integer, String>(7);
 		initializeBoard();
 	}
 
@@ -36,6 +43,9 @@ public class Connect4{
 				root.oppMaterial = .1;
 				root.score = 0;
 				root.config = (HashMap<Integer, String>)board.clone();
+				for(int i = 1; i < 8; i++){
+					System.out.println(" Config" + root.config.get(i));
+				}
 			}
 			else{
 				updateRootOpp();
@@ -44,7 +54,7 @@ public class Connect4{
 			int move = Connect4.MinMax();
 			col = move;
 			updateRootAI();
-			System.out.println("move: add to column " + move);
+			//System.out.println("move: add to column " + move);
 			gameUI.addToken(move, 1);
 
 //		}
@@ -65,7 +75,7 @@ public class Connect4{
 	}
 	public static int addPiece(int column, int row, int player){
 		if(player == 2) col = column;
-		System.out.println("Col of opp: " + col);
+		//System.out.println("Col of opp: " + col);
 		String currentCol = board.get(column);
 		String newCol;
 		char token;
@@ -80,10 +90,10 @@ public class Connect4{
 		} 
 
 		newCol = currentCol.replaceFirst("0", tokenString);
-		System.out.println("Player: " + player + "new column: " + newCol);
+		//System.out.println("Player: " + player + "new column: " + newCol);
 		board.put(column, newCol);
 		if(hasWinner(column, row, token)){
-			System.out.println("winner player " + player);
+			//System.out.println("winner player " + player);
 			endGame = true;
 			if(player == 1) return 4;
 			else return 3;
@@ -540,7 +550,7 @@ public class Connect4{
 	private static char getLeft(int col, int row, HashMap<Integer, String> board){
 		char retChar = '\0'; //null
 		if(col > 1){
-			System.out.println("col -1 is: " + board.get(col-1) + "row " + row);
+			//System.out.println("col -1 is: " + board.get(col-1) + "row " + row);
 			retChar = board.get(col-1).charAt(row);
 			
 		}
@@ -597,13 +607,13 @@ public class Connect4{
 		//Tree mainTree = new Tree();
 		//mainTree.setRootNode(new Node(board, 0));
 		//Node root = mainTree.returnRoot();
-		System.out.println("Player: " + root.player + " Score: " + root.score + " AI: " + root.myMaterial + " Opp: " + root.oppMaterial);
+		//System.out.println("Player: " + root.player + " Score: " + root.score + " AI: " + root.myMaterial + " Opp: " + root.oppMaterial);
 		ArrayList<Node> children = expand(root);
 		children = root.children;
 		Node temp;
 		for(int i = 0; i < children.size(); i++){
 			temp = children.get(i);
-			System.out.println("Index" + i + "AI: " + temp.myMaterial);
+			//System.out.println("Index" + i + "AI: " + temp.myMaterial);
 		}
 		Node max = MaxMove (root, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
 

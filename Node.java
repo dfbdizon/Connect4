@@ -47,14 +47,14 @@ class Node{
 		HashMap<Integer, String> moved = (HashMap<Integer, String>) parent.config.clone();
 		String currConfig = moved.get(col);
 		boolean retVal = true;
-		System.out.println("before: " + currConfig);
+		//System.out.println("before: " + currConfig);
 		//System.out.println("Called");
 		if(currConfig.lastIndexOf("0") <= 5 && currConfig.lastIndexOf("0") >= 0){
 			//System.out.println("EH");
 			currConfig = currConfig.replaceFirst("0", ""+ this.player);
-			System.out.println("after" + currConfig);
+			//System.out.println("after" + currConfig);
 			this.row = currConfig.lastIndexOf(this.player);
-			System.out.println("Row is" + row);
+			//System.out.println("Row is" + row);
 			this.col = col;
 			//System.out.println("after: " + currConfig);
 			moved.replace(col, currConfig);

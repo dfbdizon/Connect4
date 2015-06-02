@@ -31,7 +31,7 @@ public class Main{
 		else if(winner == 2) firstPlayerLose++;
 		else if(winner == 3)draws++;
 
-		if(numberOfPlays < 100) play();
+		if(numberOfPlays < 10) play();
 		else{
 			System.out.println("First Player Wins: " + firstPlayerWin);
 			System.out.println("First Player Lose: " + firstPlayerLose);
