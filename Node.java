@@ -47,12 +47,14 @@ class Node{
 		HashMap<Integer, String> moved = (HashMap<Integer, String>) parent.config.clone();
 		String currConfig = moved.get(col);
 		boolean retVal = true;
-		//System.out.println("before: " + currConfig);
+		System.out.println("before: " + currConfig);
 		//System.out.println("Called");
-		if(currConfig.lastIndexOf("0") <= 5){
+		if(currConfig.lastIndexOf("0") <= 5 && currConfig.lastIndexOf("0") >= 0){
 			//System.out.println("EH");
 			currConfig = currConfig.replaceFirst("0", ""+ this.player);
+			System.out.println("after" + currConfig);
 			this.row = currConfig.lastIndexOf(this.player);
+			System.out.println("Row is" + row);
 			this.col = col;
 			//System.out.println("after: " + currConfig);
 			moved.replace(col, currConfig);
@@ -63,7 +65,8 @@ class Node{
 		}
 		return retVal;
 	}
-	public void setScores(){	
+	public void setScores(){
+		//System.out.println("Player" + player);	
 		if(player == '1'){ //si 1 ung gumalaw
 			this.oppMaterial = parent.oppMaterial;
 			this.myMaterial = Connect4.updateMaterial(this.player, this.row, this.col, parent.myMaterial, this.config); 

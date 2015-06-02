@@ -48,8 +48,9 @@ class NodeTest{
 		String currConfig = moved.get(col);
 		boolean retVal = true;
 		//System.out.println("before: " + currConfig);
-		if(currConfig.lastIndexOf("0") <= 5){
+		if(currConfig.lastIndexOf("0") <= 5 && currConfig.lastIndexOf("0") >=0){
 			currConfig = currConfig.replaceFirst("0", ""+ this.player);
+			System.out.println(currConfig + " " + player);
 			this.row = currConfig.lastIndexOf(this.player);
 			this.col = col;
 			//System.out.println("after: " + currConfig);
@@ -62,6 +63,7 @@ class NodeTest{
 		return retVal;
 	}
 	public void setScores(){	
+
 		if(player == '1'){ //si 1 ung gumalaw
 			this.oppMaterial = parent.oppMaterial;
 			this.myMaterial = Connect4Test.updateMaterial(this.player, this.row, this.col, parent.myMaterial, this.config); 
