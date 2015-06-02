@@ -606,10 +606,10 @@ public class Connect4{
 			System.out.println("Index" + i + "AI: " + temp.myMaterial);
 		}
 		Node max = MaxMove (root, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
-		int index = max.col;
-		int col = children.get(index).col;
-		Node test = children.get(index);
-		System.out.println("Index" + index + " Player " + test.player + " AI SCORE " + test.myMaterial + " Opp: " + test.oppMaterial);
+		//int index = max.col;
+		//int col = children.get(index).col;
+		//Node test = children.get(index);
+		//System.out.println("Index" + index + " Player " + test.player + " AI SCORE " + test.myMaterial + " Opp: " + test.oppMaterial);
 		//System.out.println(index + " " + col);
 		return (max.col);
 	}
@@ -626,21 +626,25 @@ public class Connect4{
 		}finally{
 			//System.out.println("depth" + depth);
 			ArrayList<Node> children = root.children;
-			bestMove = children.get(0);//initialize best move
-			Node currMove = children.get(1);
-			Node dummy;
-			for(int i = 0; i <= children.size()-1; i++) {//iterate on each move
-				currMove = children.get(i);
-				alpha=Math.max(alpha,bestMove.score);
-				
-				depth=depth+1;
-				dummy = MinMove(currMove, depth, alpha, beta); 
-				if (dummy.score > (bestMove).score)
-					bestMove = currMove;	
-				if( dummy.score>=beta)
-					return dummy;
+			if(children.size() == 0) return root;
+			else if(children.size() == 1) return children.get(0);
+			else{
+				bestMove = children.get(0);//initialize best move
+				Node currMove = children.get(1);
+				Node dummy;
+				for(int i = 0; i <= children.size()-1; i++) {//iterate on each move
+					currMove = children.get(i);
+					alpha=Math.max(alpha,bestMove.score);
+					
+					depth=depth+1;
+					dummy = MinMove(currMove, depth, alpha, beta); 
+					if (dummy.score > (bestMove).score)
+						bestMove = currMove;	
+					if( dummy.score>=beta)
+						return dummy;
+				}
+				//System.out.println(children.get(children.indexOf(bestMove)));
 			}
-			//System.out.println(children.get(children.indexOf(bestMove)));
 		}
 		//System.out.println("bestMove????????????//");
 		return bestMove;
@@ -659,20 +663,24 @@ public class Connect4{
 		}finally{
 			//System.out.println("depth" + depth);
 			ArrayList<Node> children = root.children;
-			bestMove = children.get(0);
-			Node currMove = children.get(1);//initialize best move
-			Node dummy = currMove;
-			for(int i = 0; i <= children.size()-1; i++) {//iterate on all moves
-				beta=Math.min(beta, bestMove.score);
-				depth = depth+1;
-				dummy = MaxMove(currMove, depth++, alpha, beta);
-				if (dummy.score > (bestMove).score) 
-					bestMove = currMove;
-				if(dummy.score<=alpha)
-					return dummy;
-				//beta=Math.min(beta, bestMove.score);
+			if(children.size() == 0) return root;
+			else if(children.size() == 1) return children.get(0);
+			else{
+				bestMove = children.get(0);
+				Node currMove = children.get(1);//initialize best move
+				Node dummy = currMove;
+				for(int i = 0; i <= children.size()-1; i++) {//iterate on all moves
+					beta=Math.min(beta, bestMove.score);
+					depth = depth+1;
+					dummy = MaxMove(currMove, depth++, alpha, beta);
+					if (dummy.score > (bestMove).score) 
+						bestMove = currMove;
+					if(dummy.score<=alpha)
+						return dummy;
+					//beta=Math.min(beta, bestMove.score);
+				}
+				//System.out.println(children.get(children.indexOf(bestMove)));
 			}
-			//System.out.println(children.get(children.indexOf(bestMove)));
 		}
 		return bestMove;
 	}
