@@ -48,7 +48,9 @@ class Node{
 		String currConfig = moved.get(col);
 		boolean retVal = true;
 		//System.out.println("before: " + currConfig);
+		System.out.println("Called");
 		if(currConfig.lastIndexOf("0") <= 5){
+			System.out.println("EH");
 			currConfig = currConfig.replaceFirst("0", ""+ this.player);
 			this.row = currConfig.lastIndexOf(this.player);
 			this.col = col;

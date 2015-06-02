@@ -11,7 +11,7 @@ public class Connect4Test{
 	private final static char PLAYER = '2';
 	private final static char AI = '1';
 
-	private static NodeTest root;
+	private static NodeTest root2;
 
 	private static boolean isFirstMoveAI = true;
 	private static boolean isFirstMoveOpp = true;
@@ -29,20 +29,22 @@ public class Connect4Test{
 	//	if(!isFirstMoveAI){
 			if(isFirstMoveOpp){ //base case na ito
 				isFirstMoveOpp = false;
-				root = new NodeTest(null);
-				root.player = '2'; //si 2 ung huli kasing gumalaw
+				root2 = new NodeTest(null);
+				root2.player = '2'; //si 2 ung huli kasing gumalaw
 				//root.row = 1;
 				//root.col = 4;
-				root.myMaterial = .1;
-				root.oppMaterial = .1;
-				root.score = 0;
-				root.config = (HashMap<Integer, String>)board.clone();
+				root2.myMaterial = .1;
+				root2.oppMaterial = .1;
+				root2.score = 0;
+				root2.config = (HashMap<Integer, String>)board.clone();
+
+				//System.out.println("" + root2.config.size());
 			}
 			else{
 				updateRootOpp();
 			}
-			int randomCol = rand.nextInt(7) + 1;
-			int move = Connect4Test.MinMax(root) + 1;
+			int randomCol = rand.nextInt(7);
+			int move = Connect4Test.MinMax();
 			col = move;
 			updateRootAI();
 			System.out.println("move: add to column " + move);
@@ -236,7 +238,7 @@ public class Connect4Test{
 	//try: pag nag combi ie 2, + .2 - .1 since ung previous one in a row void na dahil 2 in a row na?, so if nag3, +.3 -.2
 	//so parang essentially + .1 lang -_- TRY 
 	//big score if 3 in a row tapos one move na lang panalo na
-	private static double checkHowManyInARow(char player, int row, int col, HashMap<Integer, String> board){
+		private static double checkHowManyInARow(char player, int row, int col, HashMap<Integer, String> board){
 		double retDouble = 0;
 
 		char left, right, up, down, upRight, upLeft, downRight, downLeft;
@@ -297,7 +299,7 @@ public class Connect4Test{
 						retDouble += .5;
 					}
 					else if(right2 == player){//0PPP|P
-						retDouble += 2; //perfect 4 in a row
+						retDouble += 10; //perfect 4 in a row
 					}
 				}
 			}
@@ -318,7 +320,7 @@ public class Connect4Test{
 						retDouble += .5;
 					}
 					else if(left2 == player){ //P|PPP0
-						retDouble += 2;
+						retDouble += 10;
 					}
 				}
 			}
@@ -333,7 +335,7 @@ public class Connect4Test{
 					retDouble += .5;
 				}
 				else if(left1 == player){ // PPP|P
-					retDouble += 2;
+					retDouble += 10;
 				}
 			}
 		}
@@ -363,7 +365,7 @@ public class Connect4Test{
 						retDouble += .1;
 					}
 					else if(down2 == player){//0PPP|P
-						retDouble += 1; //perfect 4 in a row
+						retDouble += 10; //perfect 4 in a row
 					}
 				}
 			}
@@ -384,7 +386,7 @@ public class Connect4Test{
 						retDouble += .5;
 					}
 					else if(up2 == player){ //P|PPP0
-						retDouble += 2;
+						retDouble += 10;
 					}
 				}
 			}
@@ -399,7 +401,7 @@ public class Connect4Test{
 					retDouble += .5;
 				}
 				else if(up1 == player){ // PPP|P
-					retDouble += 2;
+					retDouble += 10;
 				}
 			}
 		}
@@ -429,7 +431,7 @@ public class Connect4Test{
 						retDouble += .5;
 					}
 					else if(downRight2 == player){//0PPP|P
-						retDouble += 2; //perfect 4 in a row
+						retDouble += 10; //perfect 4 in a row
 					}
 				}
 			}
@@ -450,7 +452,7 @@ public class Connect4Test{
 						retDouble += .5;
 					}
 					else if(upLeft2 == player){ //P|PPP0
-						retDouble += 2;
+						retDouble += 10;
 					}
 				}
 			}
@@ -465,7 +467,7 @@ public class Connect4Test{
 					retDouble += .5;
 				}
 				else if(upLeft1 == player){ // PPP|P
-					retDouble += 2;
+					retDouble += 10;
 				}
 			}
 		}
@@ -495,7 +497,7 @@ public class Connect4Test{
 						retDouble += .5;
 					}
 					else if(downLeft2 == player){//0PPP|P
-						retDouble += 2; //perfect 4 in a row
+						retDouble += 10; //perfect 4 in a row
 					}
 				}
 			}
@@ -516,7 +518,7 @@ public class Connect4Test{
 						retDouble += .5;
 					}
 					else if(upRight2 == player){ //P|PPP0
-						retDouble += 2;
+						retDouble += 10;
 					}
 				}
 			}
@@ -531,7 +533,7 @@ public class Connect4Test{
 					retDouble += .5;
 				}
 				else if(upRight1 == player){ // PPP|P
-					retDouble += 2;
+					retDouble += 10;
 				}
 			}
 		}
@@ -592,7 +594,7 @@ public class Connect4Test{
 	
 //	private static int MinMax(int col, int row, char player) {
 	
-	static int MinMax(NodeTest root2) {
+	static int MinMax() {
 		//Tree mainTree = new Tree();
 		//mainTree.setRootNode(new Node(board, 0));
 		//Node root = mainTree.returnRoot();
@@ -620,7 +622,7 @@ public class Connect4Test{
 		}finally{
 			//System.out.println("depth" + depth);
 			ArrayList<NodeTest> children = root2.children;
-			bestMove = children.get(0);//initialize best move
+			bestMove = children.get(1);//initialize best move
 			NodeTest currMove = children.get(1);
 			NodeTest dummy;
 			for(int i = 0; i <= children.size()-1; i++) {//iterate on each move
@@ -798,26 +800,26 @@ public class Connect4Test{
 	}
 */
 	private static void updateRootAI(){
-		root.children.clear();
-		expand(root);
+		root2.children.clear();
+		expand(root2);
 		NodeTest temp;
-		for(int i = 0; i < root.children.size(); i++){
-			temp = root.children.get(i);
+		for(int i = 0; i < root2.children.size(); i++){
+			temp = root2.children.get(i);
 			if(temp.col == col){
-				root = temp;
+				root2 = temp;
 				break;
 			}
 		}
 	}
 
 	private static void updateRootOpp(){
-		root.children.clear();
-		expand(root);
+		root2.children.clear();
+		expand(root2);
 		NodeTest temp; 
-		for(int i = 0; i < root.children.size(); i++){
-			temp = root.children.get(i);
+		for(int i = 0; i < root2.children.size(); i++){
+			temp = root2.children.get(i);
 			if(temp.col == col){
-				root = temp;
+				root2 = temp;
 				break;
 			}
 		}	
@@ -830,6 +832,7 @@ public class Connect4Test{
 			node.setPlayer();
 			//System.out.println("adding child " + i);
 			if(node.setConfig(i)){
+				System.out.println("Here");
 				node.setScores();
 				parent.children.add(node);
 			}
