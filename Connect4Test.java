@@ -46,7 +46,7 @@ public class Connect4Test{
 			col = move;
 			updateRootAI();
 			System.out.println("move: add to column " + move);
-			gameUI.addToken(move, 1);
+			gameUI.addToken(move, 2);
 
 //		}
 	//	else if(isFirstMoveAI){
@@ -78,7 +78,7 @@ public class Connect4Test{
 			tokenString = "2";
 			token = '2';
 		} 
-
+		System.out.println("Player: " + player);
 		newCol = currentCol.replaceFirst("0", tokenString);
 		board.put(column, newCol);
 		if(hasWinner(column, row, token)){
@@ -87,9 +87,18 @@ public class Connect4Test{
 			if(player == 1) return 4;
 			else return 3;
 		}
-		//else if (Check if draw)
+		else if(isDraw()){
+			return 5;
+		}
 		if(player == 1) return 2;
 		else return 1;
+	}
+
+	private static boolean isDraw(){
+		for(int i = 1; i <= 7; i++){
+			if(board.get(i).indexOf("0") != -1) return false;
+		}
+		return true;
 	}
 
 	@SuppressWarnings("unused")
@@ -193,7 +202,7 @@ public class Connect4Test{
 		} catch(Exception e){
 			e.printStackTrace();
 		}
-		firstMove();
+		//moveAI();
 	}
 	// Heuristic 1?
 	// Count number of possible 4 in a rows that each player can still make in the current state

@@ -45,8 +45,8 @@ public class UI extends JFrame {
     Graphics g;
 
     HashMap<Integer, String> config;
-    static Connect4 gameLogic;
-    Main main;
+    Connect4 gameLogic1;
+    Connect4Test gameLogic2;
      
     final Color bgColor;
      
@@ -161,12 +161,12 @@ public class UI extends JFrame {
         });
     }
      
-    public UI(String name, HashMap<Integer, String> config, Connect4 gameLogic){
+    public UI(String name, HashMap<Integer, String> config, Connect4 gameLogic1, Connect4Test gameLogic2){
         init();
         this.name = name;
         this.config = config; 
-        this.gameLogic = gameLogic;
-        this.main = main;
+        this.gameLogic1 = gameLogic1;
+        this.gameLogic2 = gameLogic2;
 
         gameFrame.setTitle("Connect4");
         gameFrame.setSize(900, 575);
@@ -216,14 +216,13 @@ public class UI extends JFrame {
      
     public void addToken(int col, int player) {
         JLabel tokenL = new JLabel();
-        System.out.println("Column: " + col);
+        System.out.println("Turn: " + player);
         /* If human player */
         if(turn == playerNum) tokenL.setIcon(playerToken);
         else tokenL.setIcon(aiToken);
 
         Dimension tSize = tokenL.getPreferredSize();
         int occupiedRow = getOccupiedRow(col) + 1;
-        System.out.println("row: " + occupiedRow);
         if (occupiedRow < 6) {
             final int tokenW = 59, tokenH = 60;
             int initPos = 74, addPos = tokenW+11;
@@ -233,14 +232,18 @@ public class UI extends JFrame {
             gameFrame.add(tokenL);
             gameFrame.repaint();
 
-            turn = gameLogic.addPiece(col, occupiedRow, player);
+            turn = gameLogic1.addPiece(col, occupiedRow, player);
+            gameLogic2.addPiece(col, occupiedRow, player);
+            System.out.println("returned: " + turn);
         }
         updateStatus(turn);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try{
-                    if(turn == 1) gameLogic.moveAI();
-                    System.out.println("MOVINGMOVINGMOVING");
+                    //if(turn == 1) gameLogic.moveAI();
+                    if(turn == 1) gameLogic1.moveAI();
+                    else if (turn == 2) gameLogic2.moveAI();
+                    //System.out.println("MOVINGMOVINGMOVING");
                 } catch (Exception e){
                     e.printStackTrace();
                 }
@@ -273,7 +276,7 @@ public class UI extends JFrame {
             stat.setFont(new Font("Serif", Font.PLAIN, 40));
             Dimension stSize = stat.getPreferredSize();
             stat.setBounds(25, 250, stSize.width, stSize.height);
-            //Main.playAgain(2);
+            Main.playAgain(2);
 
         }
         else if(turn == 4){
@@ -281,14 +284,14 @@ public class UI extends JFrame {
             stat.setFont(new Font("Serif", Font.PLAIN, 40));
             Dimension stSize = stat.getPreferredSize();
             stat.setBounds(25, 250, stSize.width, stSize.height);
-            //Main.playAgain(1);
+            Main.playAgain(1);
         }
         else if(turn == 5){
             stat.setText("Draw");
             stat.setFont(new Font("Serif", Font.PLAIN, 40));
             Dimension stSize = stat.getPreferredSize();
             stat.setBounds(25, 250, stSize.width, stSize.height);
-            //Main.playAgain(3);
+            Main.playAgain(3);
         }
         else if(playerNum == turn) {
             stat.setText("Your Turn");
